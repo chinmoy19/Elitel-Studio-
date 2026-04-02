@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elitel Studio — Premium Creative Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ELITEL STUDIO — GLOBAL CSS TOKENS
+   To change brand colors: edit the variables below ONLY
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand Colors */
+  --ink:       #080810;
+  --ink-2:     #13131f;
+  --ink-3:     #1e1e2e;
+  --gold:      #f0b429;
+  --gold-lt:   #ffd166;
+  --gold-glow: rgba(240,180,41,.18);
+  --cream:     #faf8f3;
+  --warm:      #f2ede4;
+  --muted:     #6e6a7c;
+  --muted-lt:  #9e9aac;
+  --border:    rgba(240,180,41,.18);
+  --border-dk: rgba(255,255,255,.07);
+  --success:   #22c55e;
+  --error:     #ef4444;
+
+  /* Typography */
+  --ff-display: 'Syne', sans-serif;
+  --ff-body:    'Outfit', sans-serif;
+  --ff-mono:    'DM Mono', monospace;
+
+  /* Easing */
+  --ease-expo: cubic-bezier(.16,1,.3,1);
+  --ease-back: cubic-bezier(.34,1.56,.64,1);
+
+  /* Layout */
+  --max-w: 1320px;
+  --nav-h: 68px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family: var(--ff-body);
+  background: var(--ink);
+  color: var(--cream);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--ink-2); }
+::-webkit-scrollbar-thumb { background:var(--gold); border-radius:3px; }
+
+/* ── Selection ── */
+::selection { background: var(--gold); color: var(--ink); }
+
+/* ══════════════════════════════════
+   UTILITY CLASSES
+══════════════════════════════════ */
+.container { max-width:var(--max-w); margin:0 auto; padding:0 2rem; }
+.hidden { display:none !important; }
+.flex { display:flex; }
+.items-center { align-items:center; }
+.justify-between { justify-content:space-between; }
+.gap-1 { gap:.5rem; } .gap-2 { gap:1rem; } .gap-3 { gap:1.5rem; }
+.text-gold { color:var(--gold); }
+.text-muted { color:var(--muted); }
+
+/* ── Reveal Animation ── */
+.reveal {
+  opacity:0; transform:translateY(28px);
+  transition: opacity .7s var(--ease-expo), transform .7s var(--ease-expo);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ══════════════════════════════════
+   NAVIGATION — AMAZON-STYLE TOP NAV
+══════════════════════════════════ */
+#navbar {
+  position: fixed; top:0; left:0; right:0; z-index:1000;
+  background: var(--ink-2);
+  border-bottom: 1px solid var(--border-dk);
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  transition: box-shadow .3s;
+}
+#navbar.elevated { box-shadow: 0 4px 32px rgba(0,0,0,.5); }
+
+.nav-inner {
+  width:100%; max-width:var(--max-w); margin:0 auto;
+  padding:0 1.5rem;
+  display:flex; align-items:center; gap:1.2rem;
+}
+
+/* Logo */
+.nav-logo {
+  font-family:var(--ff-display); font-size:1.3rem; font-weight:800;
+  color:var(--cream); text-decoration:none; white-space:nowrap;
+  flex-shrink:0;
+  transition: color .2s;
+}
+.nav-logo span { color:var(--gold); }
+
+/* Search Bar */
+.nav-search {
+  flex:1; display:flex; max-width:680px;
+  border:2px solid var(--gold); border-radius:4px; overflow:hidden;
+  height:40px;
+}
+.nav-search select {
+  background:var(--warm); color:var(--ink); border:none; outline:none;
+  padding:0 .5rem; font-family:var(--ff-body); font-size:.75rem;
+  border-right:1px solid #ccc; cursor:pointer; width:110px; flex-shrink:0;
+}
+.nav-search input {
+  flex:1; border:none; outline:none; background:#fff;
+  padding:0 .8rem; font-family:var(--ff-body); font-size:.88rem;
+  color:var(--ink);
+}
+.nav-search input::placeholder { color:#999; }
+.search-btn {
+  background:var(--gold); border:none; width:44px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:1rem; flex-shrink:0;
+  transition: background .2s;
+}
+.search-btn:hover { background:var(--gold-lt); }
+
+/* Nav Actions */
+.nav-actions { display:flex; align-items:center; gap:.4rem; margin-left:auto; }
+.nav-btn {
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:.3rem .6rem; border-radius:4px; cursor:pointer;
+  text-decoration:none; color:var(--cream); border:none; background:none;
+  font-family:var(--ff-body); transition: outline .15s;
+  white-space:nowrap;
+}
+.nav-btn:hover { outline:1px solid var(--cream); }
+.nav-btn .nb-top { font-size:.68rem; color:var(--muted-lt); }
+.nav-btn .nb-bot { font-size:.82rem; font-weight:600; }
+
+.cart-btn {
+  display:flex; align-items:center; gap:.3rem;
+  padding:.3rem .6rem; color:var(--cream); text-decoration:none;
+  border-radius:4px; cursor:pointer; font-family:var(--ff-body);
+  transition: outline .15s; position:relative;
+}
+.cart-btn:hover { outline:1px solid var(--cream); }
+.cart-icon { font-size:1.6rem; }
+.cart-count {
+  position:absolute; top:2px; left:22px;
+  background:var(--gold); color:var(--ink);
+  font-size:.72rem; font-weight:700; border-radius:50%;
+  width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+}
+.cart-label { font-size:.82rem; font-weight:600; }
+
+/* Sub-Nav (Category Bar) */
+#subnav {
+  position:fixed; top:var(--nav-h); left:0; right:0; z-index:999;
+  background:var(--ink-3);
+  border-bottom:1px solid var(--border-dk);
+  height:40px; display:flex; align-items:center; overflow:hidden;
+}
+.subnav-inner {
+  max-width:var(--max-w); margin:0 auto; padding:0 1.5rem;
+  display:flex; align-items:center; gap:0;
+  overflow-x:auto; white-space:nowrap;
+  scrollbar-width:none;
+}
+.subnav-inner::-webkit-scrollbar { display:none; }
+.snav-link {
+  font-size:.8rem; font-weight:500; color:rgba(255,255,255,.8);
+  padding:0 .85rem; height:40px; display:flex; align-items:center;
+  text-decoration:none; cursor:pointer; border:none; background:none;
+  font-family:var(--ff-body); transition:color .2s, background .2s;
+  flex-shrink:0;
+}
+.snav-link:hover, .snav-link.active { color:var(--cream); background:rgba(255,255,255,.06); }
+.snav-link.active { border-bottom:2px solid var(--gold); }
+
+/* ══════════════════════════════════
+   PAGE SYSTEM — SPA ROUTING
+══════════════════════════════════ */
+.page {
+  padding-top: calc(var(--nav-h) + 40px);
+  min-height: 100vh;
+  display:none;
+}
+.page.active { display:block; }
+
+/* ══════════════════════════════════
+   ██ PAGE: HOME / DASHBOARD
+══════════════════════════════════ */
+
+/* Hero Banner */
+.hero-banner {
+  position:relative; overflow:hidden;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1028 40%, #0d0d1a 100%);
+  min-height:520px; display:flex; align-items:center;
+}
+.hero-banner::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 70% 80% at 60% 50%, rgba(240,180,41,.08), transparent);
+  pointer-events:none;
+}
+
+/* ── IMAGE ZONE: Hero Banner Background Image ──
+   Replace the URL below with your own banner image.
+   Recommended size: 1920x600px
+   ─────────────────────────────────────────── */
+.hero-banner-img {
+  position:absolute; inset:0;
+  background-image: url('YOUR_HERO_BANNER_IMAGE.jpg'); /* ← REPLACE THIS */
+  background-size:cover; background-position:center;
+  opacity:.15; /* Adjust opacity 0-1 */
+}
+
+.hero-content {
+  position:relative; z-index:1;
+  max-width:var(--max-w); margin:0 auto; padding:4rem 2rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+}
+.hero-text {}
+.hero-eyebrow {
+  font-size:.72rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold);
+  display:flex; align-items:center; gap:.5rem; margin-bottom:1rem;
+}
+.hero-eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); }
+.hero-h1 {
+  font-family:var(--ff-display); font-size:clamp(2.4rem,4.5vw,4.2rem);
+  font-weight:800; line-height:1.06; letter-spacing:-.03em;
+  margin-bottom:1.2rem;
+}
+.hero-h1 em { font-style:italic; color:var(--gold); }
+.hero-p { font-size:1.05rem; font-weight:300; color:rgba(255,255,255,.6); line-height:1.75; margin-bottom:2rem; }
+.hero-cta-row { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-gold {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--gold); color:var(--ink);
+  padding:.85rem 1.8rem; border-radius:4px; border:none;
+  font-family:var(--ff-display); font-size:.88rem; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase; cursor:pointer;
+  text-decoration:none;
+  transition: background .25s, transform .3s var(--ease-back), box-shadow .3s;
+}
+.btn-gold:hover { background:var(--gold-lt); transform:translateY(-2px); box-shadow:0 8px 28px rgba(240,180,41,.35); }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:transparent; color:var(--cream);
+  padding:.85rem 1.8rem; border-radius:4px;
+  border:1.5px solid rgba(255,255,255,.25);
+  font-family:var(--ff-display); font-size:.88rem; font-weight:600;
+  letter-spacing:.04em; cursor:pointer; text-decoration:none;
+  transition: border-color .25s, color .25s;
+}
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+/* Hero Stats */
+.hero-stats-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:1px;
+  background:rgba(240,180,41,.1); border:1px solid rgba(240,180,41,.1);
+  border-radius:8px; overflow:hidden;
+}
+.h-stat {
+  background:rgba(255,255,255,.03); padding:1.5rem;
+  text-align:center;
+}
+.h-stat-num {
+  font-family:var(--ff-display); font-size:2.2rem; font-weight:800;
+  color:var(--gold); letter-spacing:-.03em;
+}
+.h-stat-label { font-size:.75rem; color:var(--muted-lt); margin-top:.2rem; text-transform:uppercase; letter-spacing:.08em; }
+
+/* Section Titles */
+.section-title-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:1.4rem; padding-bottom:.8rem;
+  border-bottom:1px solid var(--border-dk);
+}
+.st-label {
+  font-family:var(--ff-display); font-size:1.3rem; font-weight:700;
+  letter-spacing:-.01em; display:flex; align-items:center; gap:.6rem;
+}
+.st-label::before { content:''; width:3px; height:1.1em; background:var(--gold); border-radius:2px; }
+.st-link {
+  font-size:.8rem; color:var(--gold); text-decoration:none;
+  cursor:pointer; transition:color .2s;
+}
+.st-link:hover { color:var(--gold-lt); text-decoration:underline; }
+
+/* Home Section Container */
+.home-section { max-width:var(--max-w); margin:0 auto; padding:2.5rem 2rem; }
+
+/* ── SERVICE CARDS GRID (Home Quick-Access) ── */
+.services-quick-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+  gap:1rem;
+}
+.sq-card {
+  background:var(--ink-2); border:1px solid var(--border-dk);
+  border-radius:8px; padding:1.5rem 1.2rem;
+  cursor:pointer; text-decoration:none; color:var(--cream);
+  display:flex; flex-direction:column; align-items:flex-start; gap:.6rem;
+  transition: transform .3s var(--ease-back), border-color .25s, box-shadow .3s;
+  position:relative; overflow:hidden;
+}
+.sq-card::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:2px; background:var(--gold);
+  transition: width .4s var(--ease-expo);
+}
+.sq-card:hover { transform:translateY(-4px); border-color:rgba(240,180,41,.3); box-shadow:0 12px 36px rgba(0,0,0,.3); }
+.sq-card:hover::after { width:100%; }
+.sq-icon { font-size:2rem; }
+.sq-name { font-family:var(--ff-display); font-size:.95rem; font-weight:700; }
+.sq-desc { font-size:.76rem; color:var(--muted-lt); line-height:1.5; }
+.sq-from { font-size:.72rem; color:var(--gold); font-weight:600; margin-top:auto; padding-top:.4rem; }
+
+/* ── FEATURED WORKS (Home) ── */
+.featured-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:1rem;
+}
+.fw-card {
+  border-radius:8px; overflow:hidden;
+  background:var(--ink-2); border:1px solid var(--border-dk);
+  cursor:pointer; transition: transform .35s var(--ease-expo), box-shadow .3s;
+}
+.fw-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,.4); }
+.fw-img {
+  height:180px; overflow:hidden; position:relative;
+  background:linear-gradient(135deg,#1a1028,#0d0d1a);
+  display:flex; align-items:center; justify-content:center;
+}
+.fw-img img {
+  width:100%; height:100%; object-fit:cover;
+  transition: transform .6s var(--ease-expo);
+}
+.fw-card:hover .fw-img img { transform:scale(1.05); }
+
+/* ── IMAGE ZONE: Portfolio Preview Images ──
+   Each .fw-placeholder is where an image goes.
+   Replace the gradient backgrounds with actual <img> tags if you want.
+   ─────────────────────────────────────────── */
+.fw-placeholder {
+  width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.4rem; font-family:var(--ff-display); font-size:.8rem; color:rgba(255,255,255,.3);
+}
+.fw-placeholder .p-icon { font-size:2.5rem; }
+
+.fw-info { padding:1rem; }
+.fw-cat { font-size:.7rem; color:var(--gold); font-weight:600; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.3rem; }
+.fw-title { font-family:var(--ff-display); font-size:1rem; font-weight:700; margin-bottom:.3rem; }
+.fw-sub { font-size:.78rem; color:var(--muted-lt); }
+
+/* ── PROMO BANNERS ── */
+.promo-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+.promo-card {
+  border-radius:8px; padding:2rem 1.5rem; position:relative; overflow:hidden;
+  cursor:pointer; min-height:160px; display:flex; flex-direction:column; justify-content:flex-end;
+  transition: transform .3s var(--ease-expo);
+}
+.promo-card:hover { transform:translateY(-3px); }
+.promo-card h3 { font-family:var(--ff-display); font-size:1.2rem; font-weight:800; margin-bottom:.4rem; }
+.promo-card p { font-size:.8rem; opacity:.7; margin-bottom:.8rem; }
+.promo-link { font-size:.78rem; font-weight:600; color:var(--gold); text-decoration:underline; }
+.pc-1 { background:linear-gradient(135deg,#1a0e2e,#2d1f4a); border:1px solid rgba(120,80,200,.2); }
+.pc-2 { background:linear-gradient(135deg,#1a1a0a,#2e2e00); border:1px solid rgba(240,180,41,.15); }
+.pc-3 { background:linear-gradient(135deg,#0a1a1a,#0d2e2e); border:1px solid rgba(40,180,180,.15); }
+
+/* ══════════════════════════════════
+   ██ PAGE: SERVICE DETAIL PAGES
+   (Website, Poster, Portfolio, Video, Thumbnail, Social)
+══════════════════════════════════ */
+.service-page { max-width:var(--max-w); margin:0 auto; padding:2rem; }
+
+/* Service Hero */
+.service-hero {
+  background:var(--ink-2); border-radius:12px;
+  padding:3.5rem 3rem; margin-bottom:2rem;
+  position:relative; overflow:hidden;
+  border:1px solid var(--border-dk);
+}
+.service-hero::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:240px; height:240px; border-radius:50%;
+  background:radial-gradient(circle, var(--gold-glow), transparent 70%);
+}
+.sh-eyebrow { font-size:.72rem; color:var(--gold); font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.8rem; }
+.sh-title { font-family:var(--ff-display); font-size:clamp(2rem,4vw,3.5rem); font-weight:800; letter-spacing:-.03em; margin-bottom:.8rem; }
+.sh-title em { color:var(--gold); font-style:italic; }
+.sh-desc { font-size:1rem; color:rgba(255,255,255,.55); line-height:1.75; max-width:600px; margin-bottom:2rem; }
+.sh-meta { display:flex; gap:2rem; flex-wrap:wrap; }
+.sh-meta-item { display:flex; align-items:center; gap:.5rem; font-size:.82rem; color:var(--muted-lt); }
+.sh-meta-item strong { color:var(--cream); }
+
+/* Packages Grid */
+.packages-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.2rem; margin-bottom:2.5rem; }
+.pkg-card {
+  background:var(--ink-2); border:1px solid var(--border-dk);
+  border-radius:10px; padding:2rem; position:relative;
+  transition: border-color .3s, box-shadow .3s, transform .3s var(--ease-back);
+}
+.pkg-card:hover { border-color:rgba(240,180,41,.3); box-shadow:0 12px 40px rgba(0,0,0,.3); transform:translateY(-3px); }
+.pkg-card.featured { border-color:var(--gold); }
+.pkg-badge {
+  position:absolute; top:-10px; left:1.5rem;
+  background:var(--gold); color:var(--ink);
+  font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  padding:.25rem .8rem; border-radius:20px;
+}
+.pkg-tier { font-size:.72rem; color:var(--muted-lt); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem; }
+.pkg-name { font-family:var(--ff-display); font-size:1.4rem; font-weight:800; margin-bottom:.3rem; }
+.pkg-price { font-family:var(--ff-display); font-size:2rem; font-weight:800; color:var(--gold); letter-spacing:-.03em; margin-bottom:1.2rem; }
+.pkg-price span { font-size:1rem; color:var(--muted-lt); font-family:var(--ff-body); font-weight:400; }
+.pkg-features { list-style:none; display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.5rem; }
+.pkg-features li { font-size:.82rem; color:rgba(255,255,255,.65); display:flex; align-items:flex-start; gap:.5rem; }
+.pkg-features li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
+.pkg-btn { width:100%; padding:.85rem; border-radius:4px; cursor:pointer; font-family:var(--ff-display); font-size:.85rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; border:1.5px solid var(--border); background:transparent; color:var(--cream); transition: all .25s; }
+.pkg-btn:hover, .pkg-card.featured .pkg-btn { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+/* Process Steps (for service page) */
+.process-strip { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:1px; background:var(--border-dk); border:1px solid var(--border-dk); border-radius:8px; overflow:hidden; margin-bottom:2rem; }
+.ps-step { background:var(--ink-2); padding:1.5rem 1.2rem; }
+.ps-num { font-family:var(--ff-display); font-size:2rem; font-weight:800; color:rgba(240,180,41,.2); margin-bottom:.5rem; }
+.ps-title { font-size:.88rem; font-weight:600; margin-bottom:.3rem; }
+.ps-desc { font-size:.76rem; color:var(--muted-lt); line-height:1.55; }
+
+/* FAQ */
+.faq-list { display:flex; flex-direction:column; gap:.6rem; }
+.faq-item { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:6px; overflow:hidden; }
+.faq-q {
+  width:100%; text-align:left; padding:1rem 1.2rem;
+  background:none; border:none; color:var(--cream);
+  font-family:var(--ff-body); font-size:.9rem; font-weight:500;
+  cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+  gap:1rem;
+}
+.faq-q .faq-icon { color:var(--gold); font-size:1.1rem; transition:transform .3s; flex-shrink:0; }
+.faq-q.open .faq-icon { transform:rotate(45deg); }
+.faq-a { padding:0 1.2rem; max-height:0; overflow:hidden; transition:max-height .4s var(--ease-expo), padding .3s; font-size:.85rem; color:var(--muted-lt); line-height:1.7; }
+.faq-a.open { max-height:300px; padding:.2rem 1.2rem 1rem; }
+
+/* Service Gallery (Portfolio previews within service) */
+.svc-gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:1rem; }
+.sg-item {
+  border-radius:8px; overflow:hidden; aspect-ratio:4/3;
+  background:var(--ink-2); border:1px solid var(--border-dk); cursor:pointer;
+  transition: transform .35s var(--ease-expo);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+}
+.sg-item:hover { transform:scale(1.03); }
+
+/* ── IMAGE ZONE: Service Gallery Items ──
+   Each .sg-item is an image placeholder.
+   Add <img> tags inside them OR set background-image in style attribute.
+   ─────────────────────────────────────── */
+.sg-placeholder {
+  display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  color:rgba(255,255,255,.2); font-size:.78rem; text-align:center; padding:1rem;
+}
+.sg-placeholder .sp-icon { font-size:2.2rem; }
+
+/* ══════════════════════════════════
+   ██ PAGE: PORTFOLIO (Full)
+══════════════════════════════════ */
+.portfolio-page { max-width:var(--max-w); margin:0 auto; padding:2rem; }
+.portfolio-filter { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+.pf-btn {
+  padding:.45rem 1.1rem; border-radius:20px; border:1px solid var(--border-dk);
+  background:transparent; color:var(--muted-lt); font-family:var(--ff-body); font-size:.8rem; cursor:pointer;
+  transition: all .2s;
+}
+.pf-btn.active, .pf-btn:hover { background:var(--gold); color:var(--ink); border-color:var(--gold); font-weight:600; }
+.portfolio-masonry {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
+  gap:1.2rem;
+}
+.pm-item {
+  background:var(--ink-2); border:1px solid var(--border-dk);
+  border-radius:10px; overflow:hidden; cursor:pointer;
+  transition: transform .35s var(--ease-expo), box-shadow .3s;
+}
+.pm-item:hover { transform:translateY(-5px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+.pm-img {
+  height:220px; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,#1a1028,#0d1a1a);
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ── IMAGE ZONE: Portfolio Item Images ──
+   Replace the .pm-placeholder div with an <img> tag.
+   Recommended: .pm-img { background-image: url('your-image.jpg'); background-size:cover; }
+   ─────────────────────────────────────── */
+.pm-placeholder { display:flex; flex-direction:column; align-items:center; gap:.5rem; color:rgba(255,255,255,.2); font-size:.82rem; text-align:center; }
+.pm-placeholder .pp-icon { font-size:3rem; }
+.pm-info { padding:1.2rem; }
+.pm-cat { font-size:.68rem; color:var(--gold); font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.3rem; }
+.pm-title { font-family:var(--ff-display); font-size:1.05rem; font-weight:700; margin-bottom:.3rem; }
+.pm-client { font-size:.76rem; color:var(--muted-lt); }
+
+/* ══════════════════════════════════
+   ██ PAGE: ORDER / REQUEST FORM
+══════════════════════════════════ */
+.order-page { max-width:900px; margin:0 auto; padding:2rem; }
+.order-header { text-align:center; margin-bottom:2.5rem; }
+.order-header h2 { font-family:var(--ff-display); font-size:2.2rem; font-weight:800; letter-spacing:-.02em; margin-bottom:.5rem; }
+.order-header p { color:var(--muted-lt); font-size:.95rem; }
+
+.order-form { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:12px; padding:2.5rem; }
+
+.form-section { margin-bottom:2rem; }
+.form-section-title { font-family:var(--ff-display); font-size:1.05rem; font-weight:700; margin-bottom:1.2rem; padding-bottom:.6rem; border-bottom:1px solid var(--border-dk); display:flex; align-items:center; gap:.5rem; }
+.fst-num { background:var(--gold); color:var(--ink); font-size:.72rem; font-weight:800; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--ff-mono); }
+
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-grid-3 { grid-template-columns:1fr 1fr 1fr; }
+.form-group { display:flex; flex-direction:column; gap:.4rem; }
+.form-group.full { grid-column:1/-1; }
+.f-label { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-lt); }
+.f-input, .f-select, .f-textarea {
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+  border-radius:4px; padding:.75rem 1rem; font-family:var(--ff-body); font-size:.88rem;
+  color:var(--cream); outline:none; transition: border-color .25s, background .25s;
+}
+.f-input::placeholder, .f-textarea::placeholder { color:rgba(255,255,255,.2); }
+.f-input:focus, .f-select:focus, .f-textarea:focus { border-color:var(--gold); background:rgba(240,180,41,.04); }
+.f-select { cursor:pointer; appearance:none; }
+.f-select option { background:var(--ink-2); color:var(--cream); }
+.f-textarea { resize:vertical; min-height:100px; }
+
+/* Service Selector (Order form) */
+.svc-selector { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:.6rem; }
+.svc-opt { position:relative; }
+.svc-opt input { position:absolute; opacity:0; width:0; height:0; }
+.svc-opt label {
+  display:flex; flex-direction:column; align-items:center; gap:.3rem;
+  padding:.8rem .5rem; border:1px solid rgba(255,255,255,.1); border-radius:6px;
+  font-size:.75rem; text-align:center; cursor:pointer;
+  transition: all .2s; color:var(--muted-lt);
+}
+.svc-opt label .sol-icon { font-size:1.4rem; }
+.svc-opt input:checked + label { border-color:var(--gold); background:rgba(240,180,41,.08); color:var(--gold); }
+.svc-opt label:hover { border-color:rgba(240,180,41,.4); }
+
+/* Budget Radio */
+.budget-opts { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap:.5rem; }
+.bud-opt { position:relative; }
+.bud-opt input { position:absolute; opacity:0; width:0; height:0; }
+.bud-opt label { display:block; text-align:center; padding:.6rem; border:1px solid rgba(255,255,255,.1); border-radius:4px; font-size:.78rem; cursor:pointer; color:var(--muted-lt); transition:all .2s; }
+.bud-opt input:checked + label { border-color:var(--gold); background:rgba(240,180,41,.08); color:var(--gold-lt); }
+
+.submit-order-btn {
+  width:100%; padding:1.1rem; background:var(--gold); border:none; border-radius:6px;
+  font-family:var(--ff-display); font-size:1rem; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--ink); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:.6rem;
+  transition: background .25s, transform .3s var(--ease-back), box-shadow .3s;
+  margin-top:1.5rem;
+}
+.submit-order-btn:hover { background:var(--gold-lt); transform:translateY(-2px); box-shadow:0 12px 36px rgba(240,180,41,.3); }
+
+/* ══════════════════════════════════
+   ██ PAGE: LOGIN / SIGNUP
+══════════════════════════════════ */
+.auth-page {
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:2rem; padding-top:calc(var(--nav-h) + 40px + 2rem);
+  background:radial-gradient(ellipse 60% 60% at 50% 0%, rgba(240,180,41,.07), transparent);
+}
+.auth-box {
+  width:100%; max-width:440px;
+  background:var(--ink-2); border:1px solid var(--border-dk);
+  border-radius:12px; padding:2.5rem;
+}
+.auth-logo { font-family:var(--ff-display); font-size:1.6rem; font-weight:800; text-align:center; margin-bottom:.3rem; }
+.auth-logo span { color:var(--gold); }
+.auth-tagline { text-align:center; color:var(--muted-lt); font-size:.82rem; margin-bottom:2rem; }
+.auth-title { font-family:var(--ff-display); font-size:1.2rem; font-weight:700; margin-bottom:1.5rem; }
+.auth-form { display:flex; flex-direction:column; gap:.9rem; }
+.auth-divider { text-align:center; font-size:.78rem; color:var(--muted); position:relative; margin:.4rem 0; }
+.auth-divider::before, .auth-divider::after { content:''; position:absolute; top:50%; width:40%; height:1px; background:var(--border-dk); }
+.auth-divider::before { left:0; } .auth-divider::after { right:0; }
+.auth-switch { text-align:center; font-size:.82rem; color:var(--muted-lt); margin-top:1.2rem; }
+.auth-switch a { color:var(--gold); cursor:pointer; text-decoration:none; }
+.auth-switch a:hover { text-decoration:underline; }
+.google-btn {
+  width:100%; padding:.8rem; border-radius:4px;
+  border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.05);
+  color:var(--cream); font-family:var(--ff-body); font-size:.88rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.6rem;
+  transition: background .2s;
+}
+.google-btn:hover { background:rgba(255,255,255,.1); }
+
+/* ══════════════════════════════════
+   ██ PAGE: DASHBOARD (Logged-in user)
+══════════════════════════════════ */
+.dash-page { max-width:var(--max-w); margin:0 auto; padding:2rem; }
+.dash-header { margin-bottom:2rem; }
+.dash-hello { font-family:var(--ff-display); font-size:1.8rem; font-weight:800; letter-spacing:-.02em; }
+.dash-hello span { color:var(--gold); }
+.dash-sub { color:var(--muted-lt); font-size:.88rem; margin-top:.2rem; }
+.dash-grid { display:grid; grid-template-columns:2fr 1fr; gap:1.5rem; }
+.dash-stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+.ds-card { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:8px; padding:1.2rem 1.5rem; }
+.ds-label { font-size:.72rem; color:var(--muted-lt); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
+.ds-val { font-family:var(--ff-display); font-size:1.8rem; font-weight:800; color:var(--gold); }
+.ds-note { font-size:.72rem; color:var(--muted-lt); margin-top:.2rem; }
+
+/* Orders Table */
+.orders-table-wrap { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:10px; overflow:hidden; }
+.ot-header { padding:1rem 1.5rem; border-bottom:1px solid var(--border-dk); font-family:var(--ff-display); font-size:1rem; font-weight:700; }
+table.orders-table { width:100%; border-collapse:collapse; }
+.orders-table th { padding:.7rem 1.2rem; text-align:left; font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-lt); border-bottom:1px solid var(--border-dk); }
+.orders-table td { padding:.85rem 1.2rem; font-size:.82rem; border-bottom:1px solid rgba(255,255,255,.04); }
+.orders-table tr:last-child td { border-bottom:none; }
+.orders-table tr:hover td { background:rgba(255,255,255,.02); }
+.status-badge { display:inline-flex; align-items:center; gap:.3rem; padding:.25rem .7rem; border-radius:20px; font-size:.7rem; font-weight:600; }
+.status-pending { background:rgba(240,180,41,.15); color:var(--gold); }
+.status-progress { background:rgba(99,102,241,.15); color:#818cf8; }
+.status-done { background:rgba(34,197,94,.15); color:var(--success); }
+.status-review { background:rgba(249,115,22,.15); color:#fb923c; }
+
+/* Notifications Panel */
+.notif-panel { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:10px; overflow:hidden; }
+.np-header { padding:1rem 1.5rem; border-bottom:1px solid var(--border-dk); font-family:var(--ff-display); font-size:1rem; font-weight:700; }
+.notif-list { display:flex; flex-direction:column; }
+.notif-item { padding:.9rem 1.2rem; border-bottom:1px solid rgba(255,255,255,.04); display:flex; align-items:flex-start; gap:.8rem; }
+.notif-item:last-child { border-bottom:none; }
+.ni-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); margin-top:.35rem; flex-shrink:0; }
+.ni-dot.read { background:var(--muted); }
+.ni-text { font-size:.8rem; color:rgba(255,255,255,.7); line-height:1.5; }
+.ni-time { font-size:.7rem; color:var(--muted); margin-top:.2rem; }
+
+/* ══════════════════════════════════
+   ██ PAGE: SUPPORT
+══════════════════════════════════ */
+.support-page { max-width:var(--max-w); margin:0 auto; padding:2rem; }
+.support-hero { background:var(--ink-2); border-radius:12px; padding:3rem; text-align:center; margin-bottom:2rem; border:1px solid var(--border-dk); }
+.support-hero h2 { font-family:var(--ff-display); font-size:2rem; font-weight:800; margin-bottom:.5rem; }
+.support-hero p { color:var(--muted-lt); margin-bottom:1.5rem; }
+.support-search { display:flex; max-width:500px; margin:0 auto; gap:.5rem; }
+.support-search input { flex:1; background:rgba(255,255,255,.07); border:1px solid var(--border-dk); border-radius:4px; padding:.75rem 1rem; color:var(--cream); font-family:var(--ff-body); font-size:.9rem; outline:none; }
+.support-search input:focus { border-color:var(--gold); }
+.support-search button { padding:.75rem 1.4rem; background:var(--gold); border:none; border-radius:4px; cursor:pointer; font-family:var(--ff-display); font-weight:700; font-size:.85rem; color:var(--ink); }
+.support-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:1rem; margin-bottom:2rem; }
+.support-card { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:8px; padding:1.5rem; cursor:pointer; transition:border-color .25s, transform .3s var(--ease-back); }
+.support-card:hover { border-color:rgba(240,180,41,.3); transform:translateY(-3px); }
+.sc-icon { font-size:2rem; margin-bottom:.8rem; }
+.sc-title { font-family:var(--ff-display); font-size:1rem; font-weight:700; margin-bottom:.4rem; }
+.sc-desc { font-size:.8rem; color:var(--muted-lt); line-height:1.55; }
+.live-chat-btn { display:flex; align-items:center; gap:.8rem; background:var(--ink-2); border:1px solid var(--border); border-radius:8px; padding:1.5rem; cursor:pointer; transition: background .25s; margin-bottom:1rem; }
+.live-chat-btn:hover { background:rgba(240,180,41,.06); }
+.lcb-icon { font-size:2rem; }
+.lcb-text strong { display:block; font-weight:600; margin-bottom:.2rem; }
+.lcb-text span { font-size:.8rem; color:var(--muted-lt); }
+
+/* ══════════════════════════════════
+   ██ PAGE: PROFILE / ACCOUNT
+══════════════════════════════════ */
+.profile-page { max-width:900px; margin:0 auto; padding:2rem; }
+.profile-grid { display:grid; grid-template-columns:260px 1fr; gap:1.5rem; }
+.profile-sidebar { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:10px; padding:1.5rem; height:fit-content; }
+
+/* ── IMAGE ZONE: User Avatar ──
+   Replace the .avatar-placeholder with an <img> tag.
+   <img src="YOUR_AVATAR.jpg" alt="User Name" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">
+   ─────────────────────────────── */
+.avatar-placeholder {
+  width:80px; height:80px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#c87000);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--ff-display); font-size:1.8rem; font-weight:800; color:var(--ink);
+  margin:0 auto 1rem;
+}
+.profile-name { font-family:var(--ff-display); font-size:1.1rem; font-weight:700; text-align:center; }
+.profile-email { font-size:.78rem; color:var(--muted-lt); text-align:center; margin-bottom:1.2rem; }
+.profile-nav { list-style:none; display:flex; flex-direction:column; gap:.2rem; }
+.pnav-item { padding:.65rem .8rem; border-radius:4px; font-size:.85rem; cursor:pointer; display:flex; align-items:center; gap:.6rem; color:var(--muted-lt); transition: background .2s, color .2s; }
+.pnav-item:hover, .pnav-item.active { background:rgba(240,180,41,.1); color:var(--gold); }
+.profile-main { background:var(--ink-2); border:1px solid var(--border-dk); border-radius:10px; padding:2rem; }
+.profile-section-title { font-family:var(--ff-display); font-size:1.1rem; font-weight:700; margin-bottom:1.2rem; padding-bottom:.6rem; border-bottom:1px solid var(--border-dk); }
+
+/* ══════════════════════════════════
+   ██ FOOTER
+══════════════════════════════════ */
+#footer {
+  background:var(--ink-2); border-top:1px solid var(--border-dk);
+  padding:3.5rem 0 1.5rem;
+  margin-top:3rem;
+}
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2.5rem; margin-bottom:2.5rem; max-width:var(--max-w); margin:0 auto 2.5rem; padding:0 2rem; }
+.footer-brand-col .fb-logo { font-family:var(--ff-display); font-size:1.4rem; font-weight:800; margin-bottom:.6rem; }
+.footer-brand-col .fb-logo span { color:var(--gold); }
+.footer-brand-col .fb-desc { font-size:.8rem; color:var(--muted-lt); line-height:1.65; max-width:220px; margin-bottom:1.2rem; }
+.social-row { display:flex; gap:.6rem; }
+.soc-link { width:34px; height:34px; border-radius:4px; border:1px solid rgba(240,180,41,.2); display:flex; align-items:center; justify-content:center; font-size:.85rem; color:var(--muted-lt); cursor:pointer; transition: border-color .2s, color .2s; text-decoration:none; }
+.soc-link:hover { border-color:var(--gold); color:var(--gold); }
+.footer-col-title { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+.footer-links a { font-size:.8rem; color:rgba(255,255,255,.4); text-decoration:none; cursor:pointer; transition:color .2s; }
+.footer-links a:hover { color:var(--cream); }
+.footer-bottom-bar { max-width:var(--max-w); margin:0 auto; padding:1.2rem 2rem 0; border-top:1px solid rgba(255,255,255,.05); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem; }
+.footer-copy { font-size:.75rem; color:rgba(255,255,255,.2); }
+.footer-legal { display:flex; gap:1.5rem; }
+.footer-legal a { font-size:.75rem; color:rgba(255,255,255,.2); text-decoration:none; cursor:pointer; }
+.footer-legal a:hover { color:var(--muted-lt); }
+
+/* ══════════════════════════════════
+   MODAL SYSTEM (Success, Cart, etc.)
+══════════════════════════════════ */
+.modal-backdrop {
+  position:fixed; inset:0; background:rgba(0,0,0,.7);
+  backdrop-filter:blur(8px); z-index:2000;
+  display:flex; align-items:center; justify-content:center;
+  padding:2rem; opacity:0; pointer-events:none; transition:opacity .35s;
+}
+.modal-backdrop.open { opacity:1; pointer-events:all; }
+.modal-box {
+  background:var(--ink-2); border:1px solid var(--border);
+  border-radius:14px; padding:2.5rem; max-width:480px; width:100%;
+  transform:scale(.93) translateY(16px);
+  transition: transform .45s var(--ease-back);
+  text-align:center;
+}
+.modal-backdrop.open .modal-box { transform:scale(1) translateY(0); }
+.modal-icon { font-size:3rem; margin-bottom:1rem; }
+.modal-title { font-family:var(--ff-display); font-size:1.8rem; font-weight:800; margin-bottom:.5rem; }
+.modal-body { font-size:.9rem; color:var(--muted-lt); line-height:1.7; margin-bottom:1.8rem; }
+.modal-close-btn { padding:.8rem 2rem; border-radius:4px; background:var(--gold); border:none; color:var(--ink); font-family:var(--ff-display); font-size:.88rem; font-weight:800; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition: background .2s; }
+.modal-close-btn:hover { background:var(--gold-lt); }
+
+/* ══════════════════════════════════
+   TOAST NOTIFICATIONS
+══════════════════════════════════ */
+#toast-area { position:fixed; bottom:1.5rem; right:1.5rem; z-index:3000; display:flex; flex-direction:column; gap:.5rem; }
+.toast {
+  background:var(--ink-3); border:1px solid var(--border-dk);
+  border-radius:6px; padding:.8rem 1.2rem; font-size:.82rem;
+  max-width:320px; display:flex; align-items:center; gap:.6rem;
+  transform:translateX(100%); opacity:0;
+  transition: transform .4s var(--ease-expo), opacity .4s;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.toast.show { transform:translateX(0); opacity:1; }
+.toast.success { border-color:rgba(34,197,94,.3); }
+.toast.error { border-color:rgba(239,68,68,.3); }
+
+/* ══════════════════════════════════
+   RESPONSIVE BASICS
+══════════════════════════════════ */
+@media (max-width:1024px) {
+  .hero-content { grid-template-columns:1fr; }
+  .dash-grid { grid-template-columns:1fr; }
+  .dash-stat-row { grid-template-columns:1fr 1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .profile-grid { grid-template-columns:1fr; }
+}
+@media (max-width:768px) {
+  :root { --nav-h:56px; }
+  .nav-search { display:none; }
+  .promo-grid { grid-template-columns:1fr; }
+  .packages-grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; }
+  .dash-stat-row { grid-template-columns:1fr 1fr; }
+  .orders-table th:nth-child(3), .orders-table td:nth-child(3) { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     🔔 TOAST NOTIFICATION AREA
+═══════════════════════════════════════ -->
+<div id="toast-area"></div>
+
+<!-- ═══════════════════════════════════════
+     🧭 MAIN NAVIGATION
+═══════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="showPage('home')" style="cursor:pointer;">Elitel<span>.</span></a>
+
+    <div class="nav-search">
+      <select id="searchCategory">
+        <option>All Services</option>
+        <option>Websites</option>
+        <option>Posters</option>
+        <option>Portfolio</option>
+        <option>Video Edit</option>
+        <option>Thumbnails</option>
+        <option>Social Media</option>
+        <!-- ════ ADD NEW SERVICE CATEGORY HERE ════ -->
+      </select>
+      <input id="searchInput" type="text" placeholder="Search services..." onkeydown="handleSearch(event)"/>
+      <button class="search-btn" onclick="doSearch()">🔍</button>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="showPage('login')" id="nav-signin-btn">
+        <span class="nb-top">Hello, Guest</span>
+        <span class="nb-bot">Sign In ▾</span>
+      </button>
+      <button class="nav-btn" onclick="showPage('orders')" title="Your Orders">
+        <span class="nb-top">Returns &</span>
+        <span class="nb-bot">Orders</span>
+      </button>
+      <button class="nav-btn" onclick="showPage('support')">
+        <span class="nb-top">Help &</span>
+        <span class="nb-bot">Support</span>
+      </button>
+      <!-- Cart button (shows order count) -->
+      <a class="cart-btn" onclick="showPage('order')">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cartCount">0</span>
+        <span class="cart-label">Request</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     📂 SUB-NAV (Category Links)
+═══════════════════════════════════════ -->
+<nav id="subnav">
+  <div class="subnav-inner">
+    <button class="snav-link active" onclick="showPage('home')">🏠 Home</button>
+    <button class="snav-link" onclick="showPage('service-website')">🌐 Web Design</button>
+    <button class="snav-link" onclick="showPage('service-poster')">🎨 Poster & Banner</button>
+    <button class="snav-link" onclick="showPage('service-portfolio')">💼 Portfolio</button>
+    <button class="snav-link" onclick="showPage('service-video')">🎬 Video Editing</button>
+    <button class="snav-link" onclick="showPage('service-thumbnail')">🖼️ Thumbnails</button>
+    <button class="snav-link" onclick="showPage('service-social')">📱 Social Media</button>
+    <button class="snav-link" onclick="showPage('portfolio-page')">🗂️ Portfolio Gallery</button>
+    <button class="snav-link" onclick="showPage('dashboard')">📊 Dashboard</button>
+    <!-- ════ ADD NEW SERVICE NAV LINK HERE ════ -->
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 1: HOME
+══════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO BANNER -->
+  <div class="hero-banner">
+    <div class="hero-banner-img"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Premium Creative Studio</div>
+        <h1 class="hero-h1">
+          Your Vision,<br>
+          <em>Crafted to</em><br>
+          Perfection.
+        </h1>
+        <p class="hero-p">From stunning websites to viral thumbnails — Elitel Studio delivers world-class creative services, on time, every time.</p>
+        <div class="hero-cta-row">
+          <button class="btn-gold" onclick="showPage('order')">🚀 Start a Project</button>
+          <button class="btn-outline" onclick="showPage('portfolio-page')">View Our Work →</button>
+        </div>
+      </div>
+      <div class="hero-stats-grid">
+        <div class="h-stat">
+          <div class="h-stat-num">120+</div>
+          <div class="h-stat-label">Projects Done</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num">98%</div>
+          <div class="h-stat-label">Satisfaction</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num">7 Days</div>
+          <div class="h-stat-label">Avg. Delivery</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num">5 ★</div>
+          <div class="h-stat-label">Avg. Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES QUICK GRID -->
+  <div class="home-section">
+    <div class="section-title-bar">
+      <div class="st-label">Our Services</div>
+      <a class="st-link" onclick="showPage('order')">View all →</a>
+    </div>
+    <div class="services-quick-grid">
+      <div class="sq-card" onclick="showPage('service-website')">
+        <div class="sq-icon">🌐</div>
+        <div class="sq-name">Website Design</div>
+        <div class="sq-desc">Custom, responsive websites built to convert visitors into customers.</div>
+        <div class="sq-from">From $299</div>
+      </div>
+      <div class="sq-card" onclick="showPage('service-poster')">
+        <div class="sq-icon">🎨</div>
+        <div class="sq-name">Poster & Banner</div>
+        <div class="sq-desc">Eye-catching print & digital designs for any occasion or platform.</div>
+        <div class="sq-from">From $29</div>
+      </div>
+      <div class="sq-card" onclick="showPage('service-portfolio')">
+        <div class="sq-icon">💼</div>
+        <div class="sq-name">Portfolio Sites</div>
+        <div class="sq-desc">Professional portfolio websites that showcase your best work.</div>
+        <div class="sq-from">From $199</div>
+      </div>
+      <div class="sq-card" onclick="showPage('service-video')">
+        <div class="sq-icon">🎬</div>
+        <div class="sq-name">Video Editing</div>
+        <div class="sq-desc">Cinematic edits, reels, and YouTube videos that keep viewers hooked.</div>
+        <div class="sq-from">From $49</div>
+      </div>
+      <div class="sq-card" onclick="showPage('service-thumbnail')">
+        <div class="sq-icon">🖼️</div>
+        <div class="sq-name">Thumbnail Design</div>
+        <div class="sq-desc">High-CTR YouTube & social thumbnails that stop the scroll.</div>
+        <div class="sq-from">From $15</div>
+      </div>
+      <div class="sq-card" onclick="showPage('service-social')">
+        <div class="sq-icon">📱</div>
+        <div class="sq-name">Social Media Posts</div>
+        <div class="sq-desc">Branded, on-trend graphics for Instagram, Facebook, Twitter & more.</div>
+        <div class="sq-from">From $19</div>
+      </div>
+      <!-- ════════════════════════════════════════════════════
+           🆕 ADD NEW SERVICE CARD HERE
+           Copy the block above and change:
+             onclick → showPage('service-YOURNAME')
+             sq-icon → Any emoji
+             sq-name → Service name
+             sq-desc → Short description
+             sq-from → Starting price
+      ════════════════════════════════════════════════════ -->
+    </div>
+  </div>
+
+  <!-- PROMO BANNERS -->
+  <div class="home-section">
+    <div class="promo-grid">
+      <div class="promo-card pc-1" onclick="showPage('service-website')">
+        <h3>🌐 Need a Website?</h3>
+        <p>Fully responsive, SEO-optimized sites — delivered in 7 days.</p>
+        <span class="promo-link">Explore Web Design →</span>
+      </div>
+      <div class="promo-card pc-2" onclick="showPage('service-video')">
+        <h3>🎬 Video Editing</h3>
+        <p>Professional edits that grow your YouTube & social presence.</p>
+        <span class="promo-link">See Video Packages →</span>
+      </div>
+      <div class="promo-card pc-3" onclick="showPage('service-social')">
+        <h3>📱 Social Media</h3>
+        <p>Branded content packs for all your social platforms.</p>
+        <span class="promo-link">View Social Packages →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED WORKS -->
+  <div class="home-section">
+    <div class="section-title-bar">
+      <div class="st-label">Featured Work</div>
+      <a class="st-link" onclick="showPage('portfolio-page')">View all work →</a>
+    </div>
+    <div class="featured-grid">
+
+      <!-- FEATURED WORK ITEM 1
+           ── IMAGE ZONE ──
+           Replace .fw-placeholder with:
+           <img src="YOUR_IMAGE.jpg" alt="Project Name" style="width:100%;height:100%;object-fit:cover;">
+      -->
+      <div class="fw-card" onclick="showPage('portfolio-page')">
+        <div class="fw-img">
+          <div class="fw-placeholder">
+            <div class="p-icon">🌐</div>
+            <span>Website Project</span>
+            <small style="font-size:.68rem;opacity:.6;">Add image: 600x360px</small>
+          </div>
+        </div>
+        <div class="fw-info">
+          <div class="fw-cat">Web Design</div>
+          <div class="fw-title">LuxeCommerce Platform</div>
+          <div class="fw-sub">E-commerce · Delivered in 6 days</div>
+        </div>
+      </div>
+
+      <!-- FEATURED WORK ITEM 2 -->
+      <div class="fw-card" onclick="showPage('portfolio-page')">
+        <div class="fw-img">
+          <div class="fw-placeholder">
+            <div class="p-icon">🎬</div>
+            <span>Video Edit</span>
+            <small style="font-size:.68rem;opacity:.6;">Add image: 600x360px</small>
+          </div>
+        </div>
+        <div class="fw-info">
+          <div class="fw-cat">Video Editing</div>
+          <div class="fw-title">YouTube Channel Rebrand</div>
+          <div class="fw-sub">Cinematic · 200K+ views</div>
+        </div>
+      </div>
+
+      <!-- FEATURED WORK ITEM 3 -->
+      <div class="fw-card" onclick="showPage('portfolio-page')">
+        <div class="fw-img">
+          <div class="fw-placeholder">
+            <div class="p-icon">🎨</div>
+            <span>Poster Design</span>
+            <small style="font-size:.68rem;opacity:.6;">Add image: 600x360px</small>
+          </div>
+        </div>
+        <div class="fw-info">
+          <div class="fw-cat">Poster & Banner</div>
+          <div class="fw-title">NovaBrand Event Series</div>
+          <div class="fw-sub">Print + Digital · 12 designs</div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════
+           🆕 ADD MORE FEATURED WORK ITEMS HERE
+           Duplicate the .fw-card block above.
+           Replace the .fw-placeholder with an actual <img> tag.
+      ════════════════════════════════════════════ -->
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="fb-logo">Elitel<span>.</span></div>
+        <p class="fb-desc">Premium creative services for ambitious brands. Websites, graphics, videos — all under one roof.</p>
+        <div class="social-row">
+          <a class="soc-link" href="#" title="Instagram">📸</a>
+          <a class="soc-link" href="#" title="Twitter/X">𝕏</a>
+          <a class="soc-link" href="#" title="YouTube">▶</a>
+          <a class="soc-link" href="#" title="LinkedIn">in</a>
+          <!-- ════ ADD MORE SOCIAL LINKS HERE ════ -->
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('service-website')">Web Design</a></li>
+          <li><a onclick="showPage('service-poster')">Poster & Banner</a></li>
+          <li><a onclick="showPage('service-portfolio')">Portfolio Sites</a></li>
+          <li><a onclick="showPage('service-video')">Video Editing</a></li>
+          <li><a onclick="showPage('service-thumbnail')">Thumbnails</a></li>
+          <li><a onclick="showPage('service-social')">Social Media</a></li>
+          <!-- ════ ADD NEW SERVICE TO FOOTER HERE ════ -->
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('portfolio-page')">Our Work</a></li>
+          <li><a onclick="showPage('dashboard')">Dashboard</a></li>
+          <li><a onclick="showPage('support')">Support</a></li>
+          <li><a onclick="showPage('profile')">My Account</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <!-- ════ UPDATE YOUR CONTACT DETAILS HERE ════ -->
+          <li><a href="mailto:hello@elitelstudio.com">hello@elitelstudio.com</a></li>
+          <li><a href="https://wa.me/YOURPHONE" target="_blank">WhatsApp</a></li>
+          <li><a onclick="showPage('support')">Live Chat</a></li>
+          <li><a onclick="showPage('order')">Get a Quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span class="footer-copy">© 2025 Elitel Studio. All rights reserved.</span>
+      <div class="footer-legal">
+        <a>Privacy Policy</a>
+        <a>Terms of Service</a>
+        <a>Refund Policy</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-home -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 2: SERVICE — WEBSITE DESIGN
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-website">
+<div class="service-page">
+
+  <div class="service-hero">
+    <div class="sh-eyebrow">🌐 Web Design & Development</div>
+    <h2 class="sh-title">Websites that <em>convert</em><br>& impress.</h2>
+    <p class="sh-desc">From simple landing pages to full e-commerce platforms — we build fast, responsive, and beautiful websites tailored to your business goals.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">⚡ <strong>3–14 days</strong> delivery</div>
+      <div class="sh-meta-item">♾️ <strong>Unlimited</strong> revisions</div>
+      <div class="sh-meta-item">📱 <strong>Mobile-first</strong> design</div>
+      <div class="sh-meta-item">🔒 <strong>Full</strong> ownership</div>
+    </div>
+  </div>
+
+  <!-- PROCESS STEPS -->
+  <div style="margin-bottom:1rem;"><span class="st-label" style="font-family:var(--ff-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem;"><span style="width:3px;height:1.1em;background:var(--gold);border-radius:2px;display:inline-block;"></span> How It Works</span></div>
+  <div class="process-strip" style="margin-bottom:2rem;">
+    <div class="ps-step"><div class="ps-num">01</div><div class="ps-title">Discovery</div><div class="ps-desc">We learn your goals, audience, and brand identity.</div></div>
+    <div class="ps-step"><div class="ps-num">02</div><div class="ps-title">Design</div><div class="ps-desc">Wireframes and mockups — you approve before we code.</div></div>
+    <div class="ps-step"><div class="ps-num">03</div><div class="ps-title">Develop</div><div class="ps-desc">Clean, semantic, SEO-ready HTML/CSS/JS or CMS build.</div></div>
+    <div class="ps-step"><div class="ps-num">04</div><div class="ps-title">Review</div><div class="ps-desc">You test and request any changes — unlimited rounds.</div></div>
+    <div class="ps-step"><div class="ps-num">05</div><div class="ps-title">Launch</div><div class="ps-desc">We deploy, hand over files, and support you for 30 days.</div></div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div class="section-title-bar"><div class="st-label">Choose a Package</div></div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Starter</div>
+      <div class="pkg-name">Landing Page</div>
+      <div class="pkg-price">$299 <span>/ one-time</span></div>
+      <ul class="pkg-features">
+        <li>1-page responsive website</li>
+        <li>Contact form integration</li>
+        <li>Basic SEO setup</li>
+        <li>Mobile optimized</li>
+        <li>Delivered in 3 days</li>
+        <li>2 revision rounds</li>
+      </ul>
+      <button class="pkg-btn" onclick="orderService('Landing Page', '$299')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-tier">Professional</div>
+      <div class="pkg-name">Business Site</div>
+      <div class="pkg-price">$599 <span>/ one-time</span></div>
+      <ul class="pkg-features">
+        <li>5-page responsive website</li>
+        <li>Custom animations</li>
+        <li>Full SEO optimization</li>
+        <li>Contact + inquiry forms</li>
+        <li>Google Analytics setup</li>
+        <li>Delivered in 7 days</li>
+        <li>Unlimited revisions</li>
+      </ul>
+      <button class="pkg-btn" onclick="orderService('Business Website', '$599')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Enterprise</div>
+      <div class="pkg-name">E-Commerce / SaaS</div>
+      <div class="pkg-price">$1,499+ <span>/ one-time</span></div>
+      <ul class="pkg-features">
+        <li>Full e-commerce or web app</li>
+        <li>Payment gateway integration</li>
+        <li>User authentication</li>
+        <li>Admin dashboard</li>
+        <li>Custom backend logic</li>
+        <li>Timeline: custom</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="pkg-btn" onclick="orderService('E-Commerce / SaaS', '$1,499+')">Get a Quote</button>
+    </div>
+    <!-- ════════════════════════════════════════════════
+         🆕 ADD NEW PACKAGE HERE — copy a .pkg-card block
+    ════════════════════════════════════════════════ -->
+  </div>
+
+  <!-- GALLERY (Website samples) -->
+  <div class="section-title-bar" style="margin-top:2rem;"><div class="st-label">Website Samples</div><a class="st-link" onclick="showPage('portfolio-page')">Full portfolio →</a></div>
+  <div class="svc-gallery">
+    <!-- ── IMAGE ZONE: Website Sample Images ──
+         Replace each .sg-placeholder with:
+         <img src="YOUR_WEBSITE_SCREENSHOT.jpg" alt="Project" style="width:100%;height:100%;object-fit:cover;">
+         Recommended size: 600x450px
+    -->
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🌐</div><span>Website Sample 1<br><small style="opacity:.5;">Add screenshot here</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🛒</div><span>E-Commerce Sample<br><small style="opacity:.5;">Add screenshot here</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">💼</div><span>Business Site Sample<br><small style="opacity:.5;">Add screenshot here</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">📱</div><span>Mobile Design<br><small style="opacity:.5;">Add screenshot here</small></span></div></div>
+    <!-- ════ ADD MORE GALLERY IMAGES HERE ════ -->
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-title-bar" style="margin-top:2.5rem;"><div class="st-label">Frequently Asked</div></div>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need to provide content & images? <span class="faq-icon">+</span></button><div class="faq-a">Yes — you provide text content and any images you want. We can advise on structure and suggest stock images if needed. We handle all design and coding.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will the website work on mobile? <span class="faq-icon">+</span></button><div class="faq-a">Absolutely. Every website we build is fully responsive and tested on phones, tablets, and desktops.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I own the website after delivery? <span class="faq-icon">+</span></button><div class="faq-a">Yes — 100%. You receive all source files, assets, and hosting credentials. You own everything outright.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I request changes after launch? <span class="faq-icon">+</span></button><div class="faq-a">We offer 30 days of free post-launch support. After that, maintenance packages are available starting at $49/month.</div></div>
+    <!-- ════ ADD MORE FAQs HERE ════ -->
+  </div>
+
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">🚀 Start Your Website Project</button>
+  </div>
+</div>
+</div><!-- /page-service-website -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 3: SERVICE — POSTER & BANNER
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-poster">
+<div class="service-page">
+  <div class="service-hero">
+    <div class="sh-eyebrow">🎨 Poster & Banner Design</div>
+    <h2 class="sh-title">Designs that <em>stop</em><br>the scroll.</h2>
+    <p class="sh-desc">Event posters, promotional banners, digital ads — we create visuals that demand attention and drive action across every platform.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">⚡ <strong>24–48 hrs</strong> delivery</div>
+      <div class="sh-meta-item">📐 <strong>All sizes</strong> provided</div>
+      <div class="sh-meta-item">🖨️ <strong>Print-ready</strong> files</div>
+    </div>
+  </div>
+
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Basic</div>
+      <div class="pkg-name">Single Design</div>
+      <div class="pkg-price">$29 <span>/ design</span></div>
+      <ul class="pkg-features"><li>1 poster or banner</li><li>2 revision rounds</li><li>PNG + PDF export</li><li>Delivered in 24 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('Single Poster Design', '$29')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Best Value</div>
+      <div class="pkg-tier">Standard</div>
+      <div class="pkg-name">Design Pack</div>
+      <div class="pkg-price">$79 <span>/ 4 designs</span></div>
+      <ul class="pkg-features"><li>4 posters or banners</li><li>Unlimited revisions</li><li>All formats (PNG, PDF, SVG)</li><li>Source file (AI/PSD)</li><li>Delivered in 48 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('Poster Design Pack', '$79')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Premium</div>
+      <div class="pkg-name">Brand Kit</div>
+      <div class="pkg-price">$199 <span>/ month</span></div>
+      <ul class="pkg-features"><li>Up to 20 designs/month</li><li>Dedicated designer</li><li>Brand guidelines</li><li>Priority delivery</li><li>All formats + source</li></ul>
+      <button class="pkg-btn" onclick="orderService('Poster Brand Kit', '$199/mo')">Start Monthly</button>
+    </div>
+  </div>
+
+  <div class="section-title-bar" style="margin-top:2rem;"><div class="st-label">Sample Work</div></div>
+  <div class="svc-gallery">
+    <!-- ── IMAGE ZONE: Poster/Banner Samples ──
+         Replace .sg-placeholder with actual <img> tags
+         Recommended: 800x600px or event poster ratios
+    -->
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🎭</div><span>Event Poster<br><small style="opacity:.5;">Add your poster image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🛍️</div><span>Sale Banner<br><small style="opacity:.5;">Add your banner image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">📢</div><span>Digital Ad<br><small style="opacity:.5;">Add your ad image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🎉</div><span>Event Banner<br><small style="opacity:.5;">Add your image here</small></span></div></div>
+  </div>
+
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">🎨 Order Your Design</button>
+  </div>
+</div>
+</div><!-- /page-service-poster -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 4: SERVICE — PORTFOLIO SITE
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-portfolio">
+<div class="service-page">
+  <div class="service-hero">
+    <div class="sh-eyebrow">💼 Portfolio Websites</div>
+    <h2 class="sh-title">Your work deserves<br>a <em>stunning</em> stage.</h2>
+    <p class="sh-desc">Professional portfolio websites for photographers, designers, developers, artists, and freelancers. Show your best work and get more clients.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">⚡ <strong>5–7 days</strong> delivery</div>
+      <div class="sh-meta-item">🎨 <strong>Custom</strong> branding</div>
+      <div class="sh-meta-item">📱 <strong>Mobile</strong> optimized</div>
+    </div>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Essential</div><div class="pkg-name">Basic Portfolio</div>
+      <div class="pkg-price">$199 <span>/ one-time</span></div>
+      <ul class="pkg-features"><li>Single page portfolio</li><li>6 project showcases</li><li>Contact section</li><li>Mobile responsive</li><li>5 days delivery</li></ul>
+      <button class="pkg-btn" onclick="orderService('Basic Portfolio', '$199')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Recommended</div>
+      <div class="pkg-tier">Professional</div><div class="pkg-name">Pro Portfolio</div>
+      <div class="pkg-price">$399 <span>/ one-time</span></div>
+      <ul class="pkg-features"><li>Multi-page portfolio</li><li>Unlimited projects</li><li>Blog/case study section</li><li>Inquiry form + CRM link</li><li>Animations & transitions</li><li>7 days delivery</li></ul>
+      <button class="pkg-btn" onclick="orderService('Pro Portfolio', '$399')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Agency</div><div class="pkg-name">Agency Portfolio</div>
+      <div class="pkg-price">$799 <span>/ one-time</span></div>
+      <ul class="pkg-features"><li>Full agency site + portfolio</li><li>Team profiles</li><li>Client testimonials</li><li>Case studies with analytics</li><li>Admin panel for updates</li></ul>
+      <button class="pkg-btn" onclick="orderService('Agency Portfolio', '$799')">Order Now</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">💼 Build My Portfolio</button>
+  </div>
+</div>
+</div><!-- /page-service-portfolio -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 5: SERVICE — VIDEO EDITING
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-video">
+<div class="service-page">
+  <div class="service-hero">
+    <div class="sh-eyebrow">🎬 Video Editing</div>
+    <h2 class="sh-title">Videos that keep<br>viewers <em>hooked.</em></h2>
+    <p class="sh-desc">Professional video editing for YouTube, Instagram Reels, TikTok, corporate videos, and more. Cinematic color grading, seamless cuts, stunning effects.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">⚡ <strong>24–72 hrs</strong> turnaround</div>
+      <div class="sh-meta-item">🎞️ <strong>4K</strong> export available</div>
+      <div class="sh-meta-item">🎵 <strong>Music + SFX</strong> included</div>
+    </div>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Reel</div><div class="pkg-name">Short Form</div>
+      <div class="pkg-price">$49 <span>/ video</span></div>
+      <ul class="pkg-features"><li>Up to 90 sec (Reel/TikTok)</li><li>Captions + subtitles</li><li>Music sync</li><li>2 revisions</li><li>Delivered in 24 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('Short Form Video Edit', '$49')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-tier">YouTube</div><div class="pkg-name">Long Form Video</div>
+      <div class="pkg-price">$99 <span>/ video</span></div>
+      <ul class="pkg-features"><li>Up to 20 minutes</li><li>Color grading</li><li>Custom intro/outro</li><li>Chapter markers</li><li>Background music + SFX</li><li>Delivered in 48 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('YouTube Video Edit', '$99')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Premium</div><div class="pkg-name">Corporate / Ad</div>
+      <div class="pkg-price">$249 <span>/ video</span></div>
+      <ul class="pkg-features"><li>Up to 5 min promo video</li><li>Motion graphics</li><li>Voiceover editing</li><li>Brand kit integration</li><li>4K export</li><li>Unlimited revisions</li></ul>
+      <button class="pkg-btn" onclick="orderService('Corporate Video Edit', '$249')">Order Now</button>
+    </div>
+  </div>
+
+  <div class="section-title-bar" style="margin-top:2rem;"><div class="st-label">Video Samples</div></div>
+  <div class="svc-gallery">
+    <!-- ── IMAGE ZONE: Video Thumbnails/Previews ──
+         These show thumbnail previews of your edited videos.
+         Replace .sg-placeholder with <img> showing a video frame.
+         Or embed a YouTube link using <iframe>.
+    -->
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">▶️</div><span>YouTube Edit Sample<br><small style="opacity:.5;">Add video thumbnail</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">📸</div><span>Instagram Reel<br><small style="opacity:.5;">Add reel preview</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🎬</div><span>Corporate Video<br><small style="opacity:.5;">Add video preview</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🎵</div><span>Music Video Edit<br><small style="opacity:.5;">Add video thumbnail</small></span></div></div>
+  </div>
+
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">🎬 Order Video Editing</button>
+  </div>
+</div>
+</div><!-- /page-service-video -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 6: SERVICE — THUMBNAIL DESIGN
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-thumbnail">
+<div class="service-page">
+  <div class="service-hero">
+    <div class="sh-eyebrow">🖼️ Thumbnail Design</div>
+    <h2 class="sh-title">Thumbnails that<br><em>double</em> your clicks.</h2>
+    <p class="sh-desc">High-CTR YouTube thumbnails, podcast covers, and social media preview images. We design with psychology — every element drives the click.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">⚡ <strong>12–24 hrs</strong> delivery</div>
+      <div class="sh-meta-item">📏 <strong>Correct sizes</strong> guaranteed</div>
+      <div class="sh-meta-item">📈 <strong>CTR-optimized</strong> design</div>
+    </div>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Single</div><div class="pkg-name">1 Thumbnail</div>
+      <div class="pkg-price">$15 <span>/ thumbnail</span></div>
+      <ul class="pkg-features"><li>1 YouTube thumbnail</li><li>2 revision rounds</li><li>PNG 1280x720px</li><li>Delivered in 12 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('Single Thumbnail', '$15')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Best Deal</div>
+      <div class="pkg-tier">Pack</div><div class="pkg-name">5 Thumbnails</div>
+      <div class="pkg-price">$59 <span>/ pack</span></div>
+      <ul class="pkg-features"><li>5 custom thumbnails</li><li>Consistent branding</li><li>Unlimited revisions</li><li>PNG + PSD source</li><li>Delivered in 24 hrs</li></ul>
+      <button class="pkg-btn" onclick="orderService('5 Thumbnail Pack', '$59')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Monthly</div><div class="pkg-name">Retainer Pack</div>
+      <div class="pkg-price">$99 <span>/ month</span></div>
+      <ul class="pkg-features"><li>Up to 20 thumbnails/month</li><li>Priority turnaround</li><li>Channel brand kit</li><li>Dedicated designer</li></ul>
+      <button class="pkg-btn" onclick="orderService('Monthly Thumbnail Retainer', '$99/mo')">Subscribe</button>
+    </div>
+  </div>
+
+  <div class="section-title-bar" style="margin-top:2rem;"><div class="st-label">Thumbnail Samples</div></div>
+  <div class="svc-gallery">
+    <!-- ── IMAGE ZONE: Thumbnail Samples ──
+         Best ratio: 16:9 (1280x720px)
+         Replace .sg-placeholder with your actual thumbnail images
+    -->
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🖼️</div><span>Tech Channel Thumb<br><small style="opacity:.5;">Add thumbnail image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🎮</div><span>Gaming Thumbnail<br><small style="opacity:.5;">Add thumbnail image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🍳</div><span>Cooking Thumbnail<br><small style="opacity:.5;">Add thumbnail image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">💰</div><span>Finance Thumbnail<br><small style="opacity:.5;">Add thumbnail image</small></span></div></div>
+    <!-- ════ ADD MORE SAMPLE IMAGES HERE ════ -->
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">🖼️ Order Thumbnails</button>
+  </div>
+</div>
+</div><!-- /page-service-thumbnail -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 7: SERVICE — SOCIAL MEDIA POSTS
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-service-social">
+<div class="service-page">
+  <div class="service-hero">
+    <div class="sh-eyebrow">📱 Social Media Design</div>
+    <h2 class="sh-title">Content that builds<br>your <em>brand online.</em></h2>
+    <p class="sh-desc">Branded, on-trend social media graphics for Instagram, Facebook, Twitter, LinkedIn and more. Consistent, professional, and engagement-driven.</p>
+    <div class="sh-meta">
+      <div class="sh-meta-item">📐 <strong>All platforms</strong> sized</div>
+      <div class="sh-meta-item">🎨 <strong>Brand-consistent</strong></div>
+      <div class="sh-meta-item">⚡ <strong>48 hrs</strong> turnaround</div>
+    </div>
+  </div>
+  <div class="packages-grid">
+    <div class="pkg-card">
+      <div class="pkg-tier">Starter</div><div class="pkg-name">Mini Pack</div>
+      <div class="pkg-price">$19 <span>/ 3 posts</span></div>
+      <ul class="pkg-features"><li>3 custom social posts</li><li>Instagram + Facebook sizes</li><li>2 revisions</li><li>PNG export</li></ul>
+      <button class="pkg-btn" onclick="orderService('Social Mini Pack', '$19')">Order Now</button>
+    </div>
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Popular</div>
+      <div class="pkg-tier">Growth</div><div class="pkg-name">Weekly Pack</div>
+      <div class="pkg-price">$69 <span>/ 12 posts</span></div>
+      <ul class="pkg-features"><li>12 posts (3 per week)</li><li>All platform sizes</li><li>Stories + reels covers</li><li>Branded templates</li><li>Unlimited revisions</li></ul>
+      <button class="pkg-btn" onclick="orderService('Weekly Social Pack', '$69')">Order Now</button>
+    </div>
+    <div class="pkg-card">
+      <div class="pkg-tier">Agency</div><div class="pkg-name">Monthly Bundle</div>
+      <div class="pkg-price">$199 <span>/ month</span></div>
+      <ul class="pkg-features"><li>30+ posts per month</li><li>Captions included</li><li>Hashtag research</li><li>Scheduling strategy</li><li>Priority support</li></ul>
+      <button class="pkg-btn" onclick="orderService('Monthly Social Bundle', '$199/mo')">Start Monthly</button>
+    </div>
+  </div>
+
+  <div class="section-title-bar" style="margin-top:2rem;"><div class="st-label">Social Media Samples</div></div>
+  <div class="svc-gallery">
+    <!-- ── IMAGE ZONE: Social Media Post Samples ──
+         Recommended: Square 1:1 ratio (1080x1080px)
+    -->
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">📸</div><span>Instagram Post<br><small style="opacity:.5;">Add post image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">👍</div><span>Facebook Post<br><small style="opacity:.5;">Add post image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">💼</div><span>LinkedIn Post<br><small style="opacity:.5;">Add post image</small></span></div></div>
+    <div class="sg-item"><div class="sg-placeholder"><div class="sp-icon">🐦</div><span>Twitter Post<br><small style="opacity:.5;">Add post image</small></span></div></div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="btn-gold" onclick="showPage('order')" style="font-size:1rem;padding:1rem 2.5rem;">📱 Order Social Media Posts</button>
+  </div>
+</div>
+</div><!-- /page-service-social -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 8: PORTFOLIO GALLERY
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-portfolio-page">
+<div class="portfolio-page">
+  <div style="margin-bottom:1.5rem;">
+    <h2 style="font-family:var(--ff-display);font-size:2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem;">Our <span style="color:var(--gold);">Work</span></h2>
+    <p style="color:var(--muted-lt);font-size:.9rem;">120+ projects delivered. Filter by category.</p>
+  </div>
+
+  <div class="portfolio-filter">
+    <button class="pf-btn active" onclick="filterPortfolio('all', this)">All</button>
+    <button class="pf-btn" onclick="filterPortfolio('web', this)">Web Design</button>
+    <button class="pf-btn" onclick="filterPortfolio('poster', this)">Poster & Banner</button>
+    <button class="pf-btn" onclick="filterPortfolio('portfolio', this)">Portfolio</button>
+    <button class="pf-btn" onclick="filterPortfolio('video', this)">Video</button>
+    <button class="pf-btn" onclick="filterPortfolio('thumbnail', this)">Thumbnails</button>
+    <button class="pf-btn" onclick="filterPortfolio('social', this)">Social Media</button>
+    <!-- ════ ADD NEW CATEGORY FILTER BUTTON HERE ════ -->
+  </div>
+
+  <div class="portfolio-masonry" id="portfolioGrid">
+
+    <!-- ══════════════════════════════════════════════
+         PORTFOLIO ITEMS — HOW TO ADD YOUR OWN IMAGE:
+         
+         1. Find the .pm-img div inside each .pm-item
+         2. Replace the entire .pm-placeholder div with:
+            <img src="your-image.jpg" alt="Project Name" style="width:100%;height:100%;object-fit:cover;">
+         
+         HOW TO ADD A NEW PORTFOLIO ITEM:
+         Copy any .pm-item block below, change:
+           - data-cat="web" → your category (web, poster, portfolio, video, thumbnail, social)
+           - .pm-cat text → Category label
+           - .pm-title text → Project name
+           - .pm-client text → Client / description
+           - The image/placeholder
+    ══════════════════════════════════════════════ -->
+
+    <div class="pm-item" data-cat="web">
+      <div class="pm-img">
+        <!-- REPLACE BELOW WITH: <img src="website1.jpg" alt="LuxeStore" style="width:100%;height:100%;object-fit:cover;"> -->
+        <div class="pm-placeholder"><div class="pp-icon">🌐</div><span>Website Project<br><small style="opacity:.5;font-size:.7rem;">Replace with screenshot</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Web Design</div>
+        <div class="pm-title">LuxeStore E-Commerce</div>
+        <div class="pm-client">Fashion Brand · $599 project</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="video">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">🎬</div><span>Video Edit<br><small style="opacity:.5;font-size:.7rem;">Replace with thumbnail</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Video Editing</div>
+        <div class="pm-title">TechReview Channel Rebrand</div>
+        <div class="pm-client">YouTuber · 200K subs</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="poster">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">🎨</div><span>Poster Design<br><small style="opacity:.5;font-size:.7rem;">Replace with poster image</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Poster & Banner</div>
+        <div class="pm-title">NovaBrand Event Series</div>
+        <div class="pm-client">Tech Startup · 12 posters</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="thumbnail">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">🖼️</div><span>Thumbnail Design<br><small style="opacity:.5;font-size:.7rem;">Replace with thumbnail</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Thumbnail</div>
+        <div class="pm-title">Gaming Channel Pack</div>
+        <div class="pm-client">20 thumbnails · 15% CTR increase</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="portfolio">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">💼</div><span>Portfolio Site<br><small style="opacity:.5;font-size:.7rem;">Replace with screenshot</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Portfolio</div>
+        <div class="pm-title">Photographer Portfolio</div>
+        <div class="pm-client">Freelance photographer · Dubai</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="social">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">📱</div><span>Social Media Pack<br><small style="opacity:.5;font-size:.7rem;">Replace with post image</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Social Media</div>
+        <div class="pm-title">Restaurant Monthly Content</div>
+        <div class="pm-client">30 posts · Instagram + Facebook</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="web">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">🚀</div><span>SaaS Dashboard<br><small style="opacity:.5;font-size:.7rem;">Replace with screenshot</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Web Design</div>
+        <div class="pm-title">PulseAI Dashboard</div>
+        <div class="pm-client">AI Startup · SaaS platform</div>
+      </div>
+    </div>
+
+    <div class="pm-item" data-cat="video">
+      <div class="pm-img">
+        <div class="pm-placeholder"><div class="pp-icon">🎞️</div><span>Corporate Ad<br><small style="opacity:.5;font-size:.7rem;">Replace with frame</small></span></div>
+      </div>
+      <div class="pm-info">
+        <div class="pm-cat">Video Editing</div>
+        <div class="pm-title">Startup Launch Ad</div>
+        <div class="pm-client">60-sec promo · 1M+ views</div>
+      </div>
+    </div>
+
+    <!-- ════ ADD MORE PORTFOLIO ITEMS ABOVE THIS LINE ════ -->
+
+  </div>
+</div>
+</div><!-- /page-portfolio-page -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 9: ORDER / PROJECT REQUEST FORM
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-order">
+<div class="order-page">
+  <div class="order-header">
+    <h2>Start Your <span style="color:var(--gold);">Project</span></h2>
+    <p>Fill in the details below and we'll send you a custom quote within 4 hours.</p>
+  </div>
+
+  <div class="order-form">
+    <form id="mainOrderForm" onsubmit="submitOrder(event)">
+
+      <!-- SECTION 1: Personal Info -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="fst-num">1</span> Your Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="f-label" for="of-fname">First Name *</label>
+            <input class="f-input" type="text" id="of-fname" placeholder="James" required/>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-lname">Last Name *</label>
+            <input class="f-input" type="text" id="of-lname" placeholder="Wilson" required/>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-email">Email Address *</label>
+            <input class="f-input" type="email" id="of-email" placeholder="james@company.com" required/>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-phone">WhatsApp / Phone</label>
+            <input class="f-input" type="tel" id="of-phone" placeholder="+91 98765 43210"/>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-company">Company / Brand</label>
+            <input class="f-input" type="text" id="of-company" placeholder="Acme Inc."/>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-country">Country</label>
+            <select class="f-select" id="of-country">
+              <option>India</option><option>United States</option><option>United Kingdom</option><option>UAE</option><option>Pakistan</option><option>Bangladesh</option><option>Other</option>
+              <!-- ════ ADD MORE COUNTRIES HERE ════ -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Service Selection -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="fst-num">2</span> Select Service(s)</div>
+        <div class="svc-selector">
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-web" value="Website Design"/><label for="svc-web"><span class="sol-icon">🌐</span>Website Design</label></div>
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-poster" value="Poster & Banner"/><label for="svc-poster"><span class="sol-icon">🎨</span>Poster & Banner</label></div>
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-portfolio" value="Portfolio"/><label for="svc-portfolio"><span class="sol-icon">💼</span>Portfolio Site</label></div>
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-video" value="Video Editing"/><label for="svc-video"><span class="sol-icon">🎬</span>Video Editing</label></div>
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-thumb" value="Thumbnail"/><label for="svc-thumb"><span class="sol-icon">🖼️</span>Thumbnails</label></div>
+          <div class="svc-opt"><input type="checkbox" name="svc" id="svc-social" value="Social Media"/><label for="svc-social"><span class="sol-icon">📱</span>Social Media</label></div>
+          <!-- ════ ADD NEW SERVICE CHECKBOX HERE ════ -->
+        </div>
+      </div>
+
+      <!-- SECTION 3: Project Details -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="fst-num">3</span> Project Details</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="f-label" for="of-timeline">Deadline / Timeline</label>
+            <select class="f-select" id="of-timeline">
+              <option>ASAP (within 24 hrs)</option>
+              <option>3 days</option>
+              <option>1 week</option>
+              <option>2 weeks</option>
+              <option>1 month</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="f-label" for="of-package">Package Level</label>
+            <select class="f-select" id="of-package">
+              <option>Basic / Starter</option>
+              <option>Professional (Most Popular)</option>
+              <option>Premium / Enterprise</option>
+              <option>Custom (Let's discuss)</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="f-label" for="of-desc">Project Description *</label>
+            <textarea class="f-textarea" id="of-desc" placeholder="Describe what you need in detail. The more info you give, the better we can quote and deliver. Include: your goals, target audience, preferred style, references you like, and any specific features required..." required style="min-height:130px;"></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="f-label" for="of-ref">Reference Links (optional)</label>
+            <input class="f-input" type="text" id="of-ref" placeholder="https://... (websites or designs you like for reference)"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Budget -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="fst-num">4</span> Budget Range (USD)</div>
+        <div class="budget-opts">
+          <div class="bud-opt"><input type="radio" name="budget" id="bd1" value="Under $50"/><label for="bd1">Under $50</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd2" value="$50–$200"/><label for="bd2">$50–$200</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd3" value="$200–$500" checked/><label for="bd3">$200–$500</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd4" value="$500–$1,000"/><label for="bd4">$500–$1k</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd5" value="$1,000–$3,000"/><label for="bd5">$1k–$3k</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd6" value="$3,000+"/><label for="bd6">$3k+</label></div>
+          <div class="bud-opt"><input type="radio" name="budget" id="bd7" value="Flexible"/><label for="bd7">Flexible</label></div>
+          <!-- ════ ADD MORE BUDGET OPTIONS HERE ════ -->
+        </div>
+      </div>
+
+      <!-- SECTION 5: How did you find us -->
+      <div class="form-section">
+        <div class="form-section-title"><span class="fst-num">5</span> How did you find us?</div>
+        <div class="form-grid form-grid-3">
+          <div class="form-group">
+            <select class="f-select" id="of-source">
+              <option>Google Search</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Friend Referral</option><option>WhatsApp</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-order-btn">
+        🚀 <span id="orderBtnText">Submit Project Request</span>
+      </button>
+      <p style="text-align:center;margin-top:.8rem;font-size:.75rem;color:var(--muted);"> 🔒 Your details are private. We respond within 4 hours with a custom quote.</p>
+    </form>
+  </div>
+</div>
+</div><!-- /page-order -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 10: MY ORDERS (Order History)
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-orders">
+<div class="dash-page">
+  <div class="dash-header">
+    <div class="dash-hello">Your <span>Orders</span></div>
+    <div class="dash-sub">Track all your project requests and their status.</div>
+  </div>
+  <div class="orders-table-wrap">
+    <div class="ot-header">Order History</div>
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="ordersTableBody">
+        <tr>
+          <td colspan="6" style="text-align:center;color:var(--muted-lt);padding:2rem;">
+            No orders yet. <a onclick="showPage('order')" style="color:var(--gold);cursor:pointer;">Start a project →</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- ════ ORDER TABLE IS DYNAMICALLY POPULATED BY JS ════
+       To add new status types, update the statusColors object in the JS section below. -->
+</div>
+</div><!-- /page-orders -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 11: DASHBOARD
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-dashboard">
+<div class="dash-page">
+  <div class="dash-header">
+    <div class="dash-hello">Welcome back, <span id="dashName">Guest</span> 👋</div>
+    <div class="dash-sub">Here's your activity overview for Elitel Studio.</div>
+  </div>
+  <div class="dash-stat-row">
+    <div class="ds-card"><div class="ds-label">Total Orders</div><div class="ds-val" id="dash-total">0</div><div class="ds-note">All time</div></div>
+    <div class="ds-card"><div class="ds-label">In Progress</div><div class="ds-val" id="dash-progress">0</div><div class="ds-note">Active projects</div></div>
+    <div class="ds-card"><div class="ds-label">Completed</div><div class="ds-val" id="dash-done">0</div><div class="ds-note">Delivered</div></div>
+    <div class="ds-card"><div class="ds-label">Pending Review</div><div class="ds-val" id="dash-review">0</div><div class="ds-note">Awaiting your feedback</div></div>
+  </div>
+  <div class="dash-grid">
+    <div>
+      <div class="orders-table-wrap">
+        <div class="ot-header">Recent Orders</div>
+        <table class="orders-table">
+          <thead><tr><th>ID</th><th>Service</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="dashOrdersBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--muted-lt);padding:1.5rem;">No orders yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="notif-panel">
+        <div class="np-header">Notifications</div>
+        <div class="notif-list" id="notifList">
+          <div class="notif-item">
+            <div class="ni-dot read"></div>
+            <div><div class="ni-text">Welcome to Elitel Studio! Submit your first project request to get started.</div><div class="ni-time">Just now</div></div>
+          </div>
+          <!-- ════ NOTIFICATIONS ARE DYNAMICALLY ADDED ════ -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-dashboard -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 12: LOGIN
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-login">
+<div class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo">Elitel<span>.</span></div>
+    <div class="auth-tagline">Sign in to manage your projects</div>
+
+    <div class="auth-title">Sign In</div>
+    <div class="auth-form">
+      <button class="google-btn" onclick="googleSignIn()">
+        <span>🔵</span> Continue with Google
+      </button>
+      <div class="auth-divider">or use email</div>
+      <div class="form-group">
+        <label class="f-label">Email</label>
+        <input class="f-input" type="email" id="login-email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label class="f-label">Password</label>
+        <input class="f-input" type="password" id="login-pass" placeholder="••••••••"/>
+      </div>
+      <div style="text-align:right;margin-top:-.3rem;">
+        <a style="font-size:.78rem;color:var(--gold);cursor:pointer;" onclick="showToast('Password reset email sent!','success')">Forgot password?</a>
+      </div>
+      <button class="btn-gold" style="width:100%;justify-content:center;" onclick="doLogin()">Sign In →</button>
+    </div>
+    <div class="auth-switch">Don't have an account? <a onclick="showPage('signup')">Create one free</a></div>
+  </div>
+</div>
+</div><!-- /page-login -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 13: SIGNUP
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-signup">
+<div class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo">Elitel<span>.</span></div>
+    <div class="auth-tagline">Create your free account</div>
+    <div class="auth-title">Create Account</div>
+    <div class="auth-form">
+      <button class="google-btn" onclick="googleSignIn()"><span>🔵</span> Continue with Google</button>
+      <div class="auth-divider">or use email</div>
+      <div class="form-group">
+        <label class="f-label">Full Name</label>
+        <input class="f-input" type="text" id="su-name" placeholder="James Wilson"/>
+      </div>
+      <div class="form-group">
+        <label class="f-label">Email</label>
+        <input class="f-input" type="email" id="su-email" placeholder="james@company.com"/>
+      </div>
+      <div class="form-group">
+        <label class="f-label">Password</label>
+        <input class="f-input" type="password" id="su-pass" placeholder="Min. 8 characters"/>
+      </div>
+      <button class="btn-gold" style="width:100%;justify-content:center;" onclick="doSignup()">Create Account →</button>
+      <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:.3rem;">By signing up you agree to our Terms & Privacy Policy.</p>
+    </div>
+    <div class="auth-switch">Already have an account? <a onclick="showPage('login')">Sign in</a></div>
+  </div>
+</div>
+</div><!-- /page-signup -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 14: PROFILE / ACCOUNT SETTINGS
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-profile">
+<div class="profile-page">
+  <h2 style="font-family:var(--ff-display);font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;">My <span style="color:var(--gold);">Account</span></h2>
+  <div class="profile-grid">
+    <div class="profile-sidebar">
+      <!-- ── IMAGE ZONE: User Profile Picture ──
+           Replace the .avatar-placeholder below with:
+           <img src="user-avatar.jpg" alt="Name" style="width:80px;height:80px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 1rem;">
+      -->
+      <div class="avatar-placeholder" id="profileAvatar">E</div>
+      <div class="profile-name" id="profileName">Guest User</div>
+      <div class="profile-email" id="profileEmail">Not signed in</div>
+      <ul class="profile-nav">
+        <li class="pnav-item active">👤 Personal Info</li>
+        <li class="pnav-item" onclick="showPage('orders')">📦 My Orders</li>
+        <li class="pnav-item" onclick="showPage('dashboard')">📊 Dashboard</li>
+        <li class="pnav-item" onclick="showPage('support')">💬 Support</li>
+        <li class="pnav-item" onclick="doLogout()" style="margin-top:1rem;color:#f87171;">🚪 Sign Out</li>
+        <!-- ════ ADD MORE PROFILE NAV ITEMS HERE ════ -->
+      </ul>
+    </div>
+    <div class="profile-main">
+      <div class="profile-section-title">Personal Information</div>
+      <div class="form-grid" style="gap:.9rem;">
+        <div class="form-group">
+          <label class="f-label">First Name</label>
+          <input class="f-input" type="text" id="pf-fname" placeholder="James"/>
+        </div>
+        <div class="form-group">
+          <label class="f-label">Last Name</label>
+          <input class="f-input" type="text" id="pf-lname" placeholder="Wilson"/>
+        </div>
+        <div class="form-group">
+          <label class="f-label">Email</label>
+          <input class="f-input" type="email" id="pf-email" placeholder="james@email.com"/>
+        </div>
+        <div class="form-group">
+          <label class="f-label">Phone / WhatsApp</label>
+          <input class="f-input" type="tel" id="pf-phone" placeholder="+91 98765..."/>
+        </div>
+        <div class="form-group">
+          <label class="f-label">Company</label>
+          <input class="f-input" type="text" id="pf-company" placeholder="Your company name"/>
+        </div>
+        <div class="form-group">
+          <label class="f-label">Country</label>
+          <select class="f-select" id="pf-country">
+            <option>India</option><option>United States</option><option>UAE</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;">
+        <button class="btn-gold" onclick="saveProfile()" style="padding:.8rem 1.8rem;">Save Changes</button>
+        <button class="btn-outline" onclick="showPage('dashboard')" style="padding:.8rem 1.2rem;">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-profile -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ PAGE 15: SUPPORT
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-support">
+<div class="support-page">
+  <div class="support-hero">
+    <h2>How can we <span style="color:var(--gold);">help you?</span></h2>
+    <p>Search our help center or reach out to our team directly.</p>
+    <div class="support-search">
+      <input type="text" id="supportSearchInput" placeholder="Search: pricing, delivery, revisions..."/>
+      <button onclick="supportSearch()">Search</button>
+    </div>
+  </div>
+
+  <div class="section-title-bar"><div class="st-label">Browse Help Topics</div></div>
+  <div class="support-grid">
+    <div class="support-card" onclick="showSupportTopic('Getting Started')">
+      <div class="sc-icon">🚀</div>
+      <div class="sc-title">Getting Started</div>
+      <div class="sc-desc">How to place an order, what info to provide, and what to expect.</div>
+    </div>
+    <div class="support-card" onclick="showSupportTopic('Pricing & Packages')">
+      <div class="sc-icon">💰</div>
+      <div class="sc-title">Pricing & Packages</div>
+      <div class="sc-desc">Understand our service tiers, what's included, and custom quotes.</div>
+    </div>
+    <div class="support-card" onclick="showSupportTopic('Revisions Policy')">
+      <div class="sc-icon">✏️</div>
+      <div class="sc-title">Revisions Policy</div>
+      <div class="sc-desc">How many revisions you get and how to request changes.</div>
+    </div>
+    <div class="support-card" onclick="showSupportTopic('Delivery & Timelines')">
+      <div class="sc-icon">⏱️</div>
+      <div class="sc-title">Delivery & Timelines</div>
+      <div class="sc-desc">Expected turnaround times for each service type.</div>
+    </div>
+    <div class="support-card" onclick="showSupportTopic('Payment & Refunds')">
+      <div class="sc-icon">💳</div>
+      <div class="sc-title">Payment & Refunds</div>
+      <div class="sc-desc">Accepted payment methods and our refund policy.</div>
+    </div>
+    <div class="support-card" onclick="showSupportTopic('File Delivery')">
+      <div class="sc-icon">📁</div>
+      <div class="sc-title">File Delivery</div>
+      <div class="sc-desc">How you receive final files and what formats are included.</div>
+    </div>
+    <!-- ════ ADD MORE SUPPORT TOPICS HERE ════ -->
+  </div>
+
+  <div class="section-title-bar" style="margin-top:1rem;"><div class="st-label">Contact Us Directly</div></div>
+  <div class="live-chat-btn" onclick="openChat()">
+    <div class="lcb-icon">💬</div>
+    <div class="lcb-text">
+      <strong>Live Chat — WhatsApp</strong>
+      <span>We typically reply within 30 minutes · Available 9am–10pm IST</span>
+    </div>
+    <div style="margin-left:auto;color:var(--gold);font-size:.85rem;">Open Chat →</div>
+  </div>
+  <div class="live-chat-btn" onclick="window.location.href='mailto:hello@elitelstudio.com'">
+    <div class="lcb-icon">📧</div>
+    <div class="lcb-text">
+      <!-- ════ UPDATE YOUR EMAIL ADDRESS HERE ════ -->
+      <strong>Email Support</strong>
+      <span>hello@elitelstudio.com · Reply within 4 hours</span>
+    </div>
+    <div style="margin-left:auto;color:var(--gold);font-size:.85rem;">Send Email →</div>
+  </div>
+</div>
+</div><!-- /page-support -->
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ SUCCESS MODAL
+══════════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <div class="modal-title">Request Sent!</div>
+    <p class="modal-body">Thank you! We've received your project request and will send you a <strong>custom quote within 4 hours</strong> via email and WhatsApp. Get ready to build something amazing!</p>
+    <button class="modal-close-btn" onclick="closeModal()">Back to Home</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ██ JAVASCRIPT — ROUTING + INTERACTIONS
+══════════════════════════════════════════════════════════ -->
+<script>
+/* ════════════════════════════════════════════════════════
+   ELITEL STUDIO — MAIN APPLICATION SCRIPT
+   
+   📁 FILE STRUCTURE GUIDE:
+   - State data → "APP STATE" section
+   - Page routing → showPage() function
+   - Auth logic → doLogin(), doSignup(), doLogout()
+   - Order logic → submitOrder(), orderService()
+   - UI helpers → showToast(), openModal(), closeModal()
+   
+   🆕 TO ADD A NEW PAGE:
+   1. Add a <div class="page" id="page-YOURNAME"> in HTML
+   2. Add a button with onclick="showPage('YOURNAME')" in nav
+   3. No JS routing change needed — showPage() handles it automatically.
+   
+   🆕 TO ADD A NEW SERVICE:
+   1. Add the service card in HOME page services grid
+   2. Duplicate a service page block and rename IDs
+   3. Add subnav link with onclick="showPage('service-YOURNAME')"
+   4. Add footer link
+   5. Add checkbox in the order form's svc-selector
+════════════════════════════════════════════════════════ */
+
+// ── APP STATE ──────────────────────────────────────────
+const APP = {
+  currentPage: 'home',
+  isLoggedIn: false,
+  user: null,
+  orders: [],
+  cartCount: 0,
+
+  // ════ TO ADD MORE DEFAULT DATA, ADD HERE ════
+};
+
+// ── PAGE ROUTING ───────────────────────────────────────
+function showPage(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target page
+  const target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+    APP.currentPage = pageId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // Update subnav active state
+  document.querySelectorAll('.snav-link').forEach(l => l.classList.remove('active'));
+  const pageMap = {
+    'home': 0, 'service-website': 1, 'service-poster': 2, 'service-portfolio': 3,
+    'service-video': 4, 'service-thumbnail': 5, 'service-social': 6,
+    'portfolio-page': 7, 'dashboard': 8
+  };
+  const idx = pageMap[pageId];
+  if (idx !== undefined) {
+    const links = document.querySelectorAll('.snav-link');
+    if (links[idx]) links[idx].classList.add('active');
+  }
+  // Trigger reveal animations
+  setTimeout(() => {
+    document.querySelectorAll('#page-' + pageId + ' .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 80);
+    });
+  }, 50);
+}
+
+// ── SCROLL EFFECTS ─────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('elevated', window.scrollY > 10);
+});
+
+// ── SEARCH ─────────────────────────────────────────────
+function handleSearch(e) { if (e.key === 'Enter') doSearch(); }
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) return;
+  const serviceMap = {
+    'website': 'service-website', 'web': 'service-website', 'landing': 'service-website',
+    'poster': 'service-poster', 'banner': 'service-poster', 'flyer': 'service-poster',
+    'portfolio': 'service-portfolio', 'portfolio site': 'service-portfolio',
+    'video': 'service-video', 'editing': 'service-video', 'reel': 'service-video',
+    'thumbnail': 'service-thumbnail', 'thumb': 'service-thumbnail',
+    'social': 'service-social', 'instagram': 'service-social', 'facebook': 'service-social',
+    // ════ ADD MORE SEARCH KEYWORDS HERE ════
+  };
+  const found = Object.keys(serviceMap).find(k => q.includes(k));
+  if (found) {
+    showPage(serviceMap[found]);
+    showToast('Showing results for "' + q + '"', 'success');
+  } else {
+    showToast('No exact match — showing all services.', 'info');
+    showPage('home');
+  }
+  document.getElementById('searchInput').value = '';
+}
+
+// ── AUTH: LOGIN ────────────────────────────────────────
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  if (!email || !pass) { showToast('Please fill in all fields.', 'error'); return; }
+  if (!/\S+@\S+\.\S+/.test(email)) { showToast('Enter a valid email.', 'error'); return; }
+  // ════ CONNECT YOUR BACKEND / FIREBASE AUTH HERE ════
+  // Example: await firebase.auth().signInWithEmailAndPassword(email, pass)
+  const name = email.split('@')[0];
+  loginSuccess({ name, email });
+}
+
+function doSignup() {
+  const name  = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass  = document.getElementById('su-pass').value;
+  if (!name || !email || !pass) { showToast('Please fill in all fields.', 'error'); return; }
+  if (pass.length < 8) { showToast('Password must be at least 8 characters.', 'error'); return; }
+  // ════ CONNECT YOUR BACKEND / FIREBASE AUTH HERE ════
+  loginSuccess({ name, email });
+}
+
+function googleSignIn() {
+  // ════ REPLACE WITH REAL GOOGLE OAUTH ════
+  // Example: firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+  showToast('Connecting to Google...', 'info');
+  setTimeout(() => loginSuccess({ name: 'Google User', email: 'user@gmail.com' }), 1200);
+}
+
+function loginSuccess(user) {
+  APP.isLoggedIn = true;
+  APP.user = user;
+  // Update nav
+  document.getElementById('nav-signin-btn').innerHTML = `<span class="nb-top">Hello,</span><span class="nb-bot">${user.name.split(' ')[0]} ▾</span>`;
+  document.getElementById('nav-signin-btn').onclick = () => showPage('profile');
+  // Update profile page
+  document.getElementById('profileName').textContent = user.name;
+  document.getElementById('profileEmail').textContent = user.email;
+  document.getElementById('dashName').textContent = user.name.split(' ')[0];
+  document.getElementById('profileAvatar').textContent = user.name[0].toUpperCase();
+  showToast('Welcome back, ' + user.name.split(' ')[0] + '! 👋', 'success');
+  showPage('dashboard');
+}
+
+function doLogout() {
+  APP.isLoggedIn = false; APP.user = null;
+  document.getElementById('nav-signin-btn').innerHTML = '<span class="nb-top">Hello, Guest</span><span class="nb-bot">Sign In ▾</span>';
+  document.getElementById('nav-signin-btn').onclick = () => showPage('login');
+  showToast('Signed out. See you soon!', 'info');
+  showPage('home');
+}
+
+function saveProfile() {
+  showToast('Profile saved successfully!', 'success');
+}
+
+// ── ORDER SYSTEM ───────────────────────────────────────
+function orderService(name, price) {
+  // Pre-fill the order form and navigate to it
+  document.querySelectorAll('.svc-opt input').forEach(inp => inp.checked = false);
+  const match = document.querySelector(`.svc-opt input[value*="${name.split(' ')[0]}"]`);
+  if (match) match.checked = true;
+  showPage('order');
+  showToast('Adding "' + name + '" to your request — ' + price, 'success');
+  APP.cartCount++;
+  document.getElementById('cartCount').textContent = APP.cartCount;
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  const fname    = document.getElementById('of-fname').value.trim();
+  const email    = document.getElementById('of-email').value.trim();
+  const desc     = document.getElementById('of-desc').value.trim();
+  const services = [...document.querySelectorAll('.svc-opt input:checked')].map(i => i.value);
+  const budget   = document.querySelector('input[name="budget"]:checked');
+
+  if (!fname) { showToast('Please enter your name.', 'error'); return; }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) { showToast('Enter a valid email address.', 'error'); return; }
+  if (!desc)  { showToast('Please describe your project.', 'error'); return; }
+
+  // Show loading state
+  const btn = document.getElementById('orderBtnText');
+  btn.textContent = 'Sending...';
+
+  // ════ CONNECT YOUR BACKEND HERE ════
+  // Example: await fetch('/api/orders', { method:'POST', body: JSON.stringify({...}) })
+  // Or: use EmailJS, Formspree, or any form backend
+
+  setTimeout(() => {
+    btn.textContent = 'Submit Project Request';
+    // Save order locally
+    const order = {
+      id: 'ES-' + Date.now().toString().slice(-6),
+      service: services.length ? services.join(', ') : 'Custom Project',
+      date: new Date().toLocaleDateString('en-IN'),
+      amount: budget ? budget.value : 'TBD',
+      status: 'pending',
+      client: fname
+    };
+    APP.orders.unshift(order);
+    APP.cartCount = 0;
+    document.getElementById('cartCount').textContent = 0;
+    renderOrdersTable();
+    updateDashStats();
+    openModal();
+    e.target.reset();
+  }, 1600);
+}
+
+// ── ORDER TABLE RENDERING ──────────────────────────────
+const STATUS_LABELS = {
+  pending:  { label:'⏳ Pending',   cls:'status-pending'  },
+  progress: { label:'🔄 In Progress',cls:'status-progress' },
+  review:   { label:'👀 In Review', cls:'status-review'   },
+  done:     { label:'✅ Delivered', cls:'status-done'     },
+  // ════ ADD MORE STATUS TYPES HERE ════
+};
+
+function renderOrdersTable() {
+  const tbody  = document.getElementById('ordersTableBody');
+  const dtbody = document.getElementById('dashOrdersBody');
+  if (!APP.orders.length) {
+    const empty = `<tr><td colspan="6" style="text-align:center;color:var(--muted-lt);padding:2rem;">No orders yet. <a onclick="showPage('order')" style="color:var(--gold);cursor:pointer;">Start a project →</a></td></tr>`;
+    if (tbody) tbody.innerHTML = empty;
+    if (dtbody) dtbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted-lt);padding:1.5rem;">No orders yet</td></tr>`;
+    return;
+  }
+  const rows = APP.orders.map(o => {
+    const s = STATUS_LABELS[o.status] || STATUS_LABELS.pending;
+    return `<tr>
+      <td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--gold);">${o.id}</td>
+      <td>${o.service}</td>
+      <td style="color:var(--muted-lt);">${o.date}</td>
+      <td>${o.amount}</td>
+      <td><span class="status-badge ${s.cls}">${s.label}</span></td>
+      <td><a onclick="showToast('Viewing order ${o.id}','info')" style="color:var(--gold);cursor:pointer;font-size:.78rem;">View →</a></td>
+    </tr>`;
+  }).join('');
+  if (tbody)  tbody.innerHTML = rows;
+  if (dtbody) dtbody.innerHTML = rows.replace(/<td style="[^"]*">[^<]*View →.*?<\/td>/g, '');
+}
+
+function updateDashStats() {
+  document.getElementById('dash-total').textContent    = APP.orders.length;
+  document.getElementById('dash-progress').textContent = APP.orders.filter(o => o.status === 'progress').length;
+  document.getElementById('dash-done').textContent     = APP.orders.filter(o => o.status === 'done').length;
+  document.getElementById('dash-review').textContent   = APP.orders.filter(o => o.status === 'review').length;
+}
+
+// ── PORTFOLIO FILTER ───────────────────────────────────
+function filterPortfolio(cat, btn) {
+  document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#portfolioGrid .pm-item').forEach(item => {
+    const show = cat === 'all' || item.dataset.cat === cat;
+    item.style.display = show ? 'block' : 'none';
+    if (show) { item.style.opacity = '0'; item.style.transform = 'scale(.95)'; setTimeout(() => { item.style.opacity='1'; item.style.transform='scale(1)'; item.style.transition = 'opacity .35s, transform .35s'; }, 20); }
+  });
+}
+
+// ── FAQ ACCORDION ──────────────────────────────────────
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
+  if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
+}
+
+// ── MODAL ──────────────────────────────────────────────
+function openModal()  { document.getElementById('successModal').classList.add('open'); }
+function closeModal() { document.getElementById('successModal').classList.remove('open'); showPage('home'); }
+
+// ── TOAST NOTIFICATIONS ────────────────────────────────
+function showToast(msg, type = 'info') {
+  const icons = { success:'✅', error:'❌', info:'ℹ️' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${icons[type]||'ℹ️'}</span> <span>${msg}</span>`;
+  document.getElementById('toast-area').appendChild(toast);
+  requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add('show')); });
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
+}
+
+// ── SUPPORT ────────────────────────────────────────────
+function supportSearch() {
+  const q = document.getElementById('supportSearchInput').value.trim();
+  if (q) showToast('Searching for: "' + q + '"', 'info');
+}
+function showSupportTopic(topic) { showToast('Opening: ' + topic, 'info'); }
+function openChat() {
+  // ════ REPLACE WITH YOUR WHATSAPP NUMBER ════
+  window.open('https://wa.me/YOUR_WHATSAPP_NUMBER?text=Hi%20Elitel%20Studio%2C%20I%20need%20help%20with...', '_blank');
+}
+
+// ── REVEAL ANIMATION INIT ──────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── INITIAL PAGE LOAD ──────────────────────────────────
+showPage('home');
+updateDashStats();
+
+/* ════════════════════════════════════════════════════════
+   🆕 WHERE TO ADD NEW FEATURES IN THE FUTURE:
+   
+   ✅ New Page:         Add HTML + showPage() call in nav/footer
+   ✅ New Service:      Add sq-card in home + service page + form checkbox
+   ✅ New Package:      Add .pkg-card in service page + orderService() call
+   ✅ Backend API:      Replace setTimeout() blocks with fetch() calls
+   ✅ Real Auth:        Replace doLogin/doSignup with Firebase/Supabase SDK
+   ✅ Payments:         Add Stripe.js or Razorpay checkout in submitOrder()
+   ✅ WhatsApp:         Update openChat() with your number
+   ✅ Email:            Update support mailto: with your email
+   ✅ Analytics:        Add Google Analytics tag in <head>
+   ✅ Reviews:          Add a testimonials page following service page pattern
+════════════════════════════════════════════════════════ */
+</script>
+
+</body>
+</html>
